@@ -14,8 +14,11 @@ import { ThemeProvider } from '@mui/material/styles'
 import lightTheme from '../themes/lightTheme'
 import { Divider } from '@mui/material'
 import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
+    const router = useRouter()
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -24,12 +27,16 @@ export default function LoginForm() {
         //     password: data.get('password'),
         // });
 
-        const loginData = await signIn('credentials', {
+        const loginData = await signIn('login', {
             email: data.get('email'),
             password: data.get('password'),
+            redirect: false,
         })
 
-        console.log(loginData)
+        if (loginData) {
+            console.log(loginData)
+            // router.push('/')
+        }
     }
 
     return (

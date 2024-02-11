@@ -7,7 +7,7 @@ import { compare } from "bcrypt"
 const handler = NextAuth({
     adapter: PrismaAdapter(db),
 
-    secret: process.env.NEXTAUTH_SECRET,
+    // secret: process.env.NEXTAUTH_SECRET,
 
     pages: {
         signIn: '/login',
@@ -15,9 +15,7 @@ const handler = NextAuth({
 
     providers: [
         CredentialsProvider({
-            name: 'Credentials',
-            type: "credentials",
-
+            id: 'login',
             credentials: {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" }
