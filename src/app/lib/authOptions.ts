@@ -28,24 +28,34 @@ const authOptions: NextAuthOptions = {
             },
 
             async authorize(credentials) {
-                if (!credentials?.password || !credentials?.email) return null
+                try {
+                    if (!credentials?.password || !credentials?.email) return null
 
-                const existingUser = await db.user.findUnique({
-                    where: {
-                        email: credentials.email
+                    const existingUser = await db.user.findUnique({
+                        where: {
+                            email: credentials.email
+                        }
+                    })
+
+                    if (!existingUser) {
+                        return null
                     }
-                })
 
-                if (!existingUser) return null
+                    const isPasswordMatch = await compare(credentials?.password, existingUser.password)
 
-                const isPasswordMatch = await compare(credentials?.password, existingUser.password)
+                    if (!isPasswordMatch) {
+                        return null
+                    }
 
-                if (!isPasswordMatch) return null
-
-                return {
-                    id: existingUser.id.toString(),
-                    email: existingUser.email
+                    return {
+                        id: existingUser.id.toString(),
+                        email: existingUser.email
+                    }
+                } catch (error) {
+                    console.log(error)
+                    return null
                 }
+
             }
         })
     ],

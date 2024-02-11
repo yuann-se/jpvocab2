@@ -3,37 +3,29 @@ import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
-import { ThemeProvider } from '@mui/material/styles'
-import lightTheme from '../themes/lightTheme'
 import { Divider } from '@mui/material'
 import { signIn, useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
-    const router = useRouter()
     const session = useSession()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        const loginData = await signIn('credentials', {
+        signIn('credentials', {
             email: data.get('email'),
             password: data.get('password'),
-            callbackUrl: `${window.location.origin}/`
+            callbackUrl: `${window.location.origin}/`,
+            redirect: false
         })
-
-        if (loginData) {
-            console.log(loginData)
-            // router.push('/')
-        }
+            .then((data) => console.log(data))
+            .catch(err => console.log(err))
     }
 
     return (
@@ -81,10 +73,7 @@ export default function LoginForm() {
                     id="password"
                     autoComplete="current-password"
                 />
-                <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                />
+
                 <Button
                     type="submit"
                     fullWidth
@@ -104,10 +93,6 @@ export default function LoginForm() {
                 >
                     Sign in with Google
                 </Button>
-
-                <Link href="/" variant="body2">
-                    Home
-                </Link>
 
                 <Grid container>
                     <Grid item xs>
