@@ -4,6 +4,7 @@ import Link from "next/link";
 import authOptions from "./lib/authOptions";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import SignOutButton from "./components/SignOutButton";
 
 export default async function Home() {
     // const session = await getServerSession(authOptions)
@@ -17,6 +18,7 @@ export default async function Home() {
         <Box>
             {/* <Link href={'/login'}>Login</Link> */}
             <Typography>Home</Typography>
+            <SignOutButton />
             {/* {JSON.stringify(session)} */}
         </Box>
     );
