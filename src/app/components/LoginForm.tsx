@@ -13,24 +13,21 @@ import Typography from '@mui/material/Typography'
 import { ThemeProvider } from '@mui/material/styles'
 import lightTheme from '../themes/lightTheme'
 import { Divider } from '@mui/material'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
 export default function LoginForm() {
     const router = useRouter()
+    const session = useSession()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        // });
 
-        const loginData = await signIn('login', {
+        const loginData = await signIn('credentials', {
             email: data.get('email'),
             password: data.get('password'),
-            redirect: false,
+            callbackUrl: `${window.location.origin}/`
         })
 
         if (loginData) {
@@ -53,6 +50,10 @@ export default function LoginForm() {
             </Avatar>
             <Typography component="h1" variant="h5">
                 Sign in
+            </Typography>
+
+            <Typography component="h1" variant="h5">
+                {JSON.stringify(session)}
             </Typography>
             <Box
                 component="form"
@@ -103,6 +104,10 @@ export default function LoginForm() {
                 >
                     Sign in with Google
                 </Button>
+
+                <Link href="/" variant="body2">
+                    Home
+                </Link>
 
                 <Grid container>
                     <Grid item xs>
