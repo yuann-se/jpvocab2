@@ -3,10 +3,10 @@ import { db } from "./db"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from "bcrypt"
 import { NextAuthOptions } from "next-auth"
-import { Adapter } from "next-auth/adapters"
+// import { Adapter } from "next-auth/adapters"
 
 const authOptions: NextAuthOptions = {
-    adapter: PrismaAdapter(db) as Adapter,
+    adapter: PrismaAdapter(db),
 
     session: {
         strategy: "jwt"
@@ -28,34 +28,28 @@ const authOptions: NextAuthOptions = {
             },
 
             async authorize(credentials) {
-                try {
-                    if (!credentials?.password || !credentials?.email) return null
+                if (!credentials?.password || !credentials?.email) return null
 
-                    const existingUser = await db.user.findUnique({
-                        where: {
-                            email: credentials.email
-                        }
-                    })
-
-                    if (!existingUser) {
-                        return null
+                const existingUser = await db.user.findUnique({
+                    where: {
+                        email: credentials.email
                     }
+                })
 
-                    const isPasswordMatch = await compare(credentials?.password, existingUser.password)
-
-                    if (!isPasswordMatch) {
-                        return null
-                    }
-
-                    return {
-                        id: existingUser.id.toString(),
-                        email: existingUser.email
-                    }
-                } catch (error) {
-                    console.log(error)
+                if (!existingUser) {
                     return null
                 }
 
+                const isPasswordMatch = await compare(credentials?.password, existingUser.password)
+
+                if (!isPasswordMatch) {
+                    return null
+                }
+
+                return {
+                    id: existingUser.id.toString(),
+                    email: existingUser.email
+                }
             }
         })
     ],
@@ -64,7 +58,7 @@ const authOptions: NextAuthOptions = {
         async session({ session, user, token }) {
             return {
                 ...session,
-                user: { email: session.user?.email }
+                user: { email: session.user?.email, id: token.sub }
             }
         },
 

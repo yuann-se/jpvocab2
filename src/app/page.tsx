@@ -1,52 +1,49 @@
-import { Box, Button, Typography } from "@mui/material";
-import { getServerSession } from "next-auth";
-import Link from "next/link";
-import authOptions from "./lib/authOptions";
-import { getSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import SignOutButton from "./components/SignOutButton";
+import { Box, Typography } from "@mui/material"
+import { getServerSession } from "next-auth"
+import authOptions from "./lib/authOptions"
+import SignOutButton from "./components/SignOutButton"
+import { db } from "./lib/db"
+import styles from '@/styles/main.module.scss'
 
-export default async function Home() {
-    // const session = await getServerSession(authOptions)
-    // const router = useRouter()
+// interface Props {
+//     words: {
+//         id: Number,
+//         word: String[],
+//         transcription: String[],
+//         translation: String[],
+//         completePercent: Number,
+//         userId: Number,
+//         // user            User     @relation(fields: [userId], references: [id])
+//     }
+// }
 
-    // if (!session) {
-    //     router.push('/login')
-    // }
+const getWords = async () => {
+    const session = await getServerSession(authOptions)
 
-    return (
-        <Box>
-            {/* <Link href={'/login'}>Login</Link> */}
-            <Typography>Home</Typography>
-            <SignOutButton />
-            {/* {JSON.stringify(session)} */}
-        </Box>
-    );
+    const words = await db.word.findMany({
+        where: {
+            userId: Number(session?.user.id)
+        },
+        orderBy: {
+            completePercent: 'asc',
+        },
+    })
+
+    return words
 }
 
-// export async function getServerSideProps({ req, res }) {
-//     const session = await getSession({ req });
-//     if (!session) {
-//       return {
-//         redirect: {
-//           destination: '/',
-//           permanent: false,
-//         },
-//       }
-//     }
-//     return {
-//       props: {},
-//     };
-//   }
+export default async function Home() {
 
-// export async function getServerSideProps(context) {
-//     return {
-//       props: {
-//         session: await getServerSession(
-//           context.req,
-//           context.res,
-//           authOptions
-//         ),
-//       },
-//     }
-//   }
+    const words = await getWords()
+
+    return (
+        <Box className={styles.homePage}>
+            <Box className={styles.header}>
+
+            </Box>
+            <Typography>Home</Typography>
+            <SignOutButton />
+            {JSON.stringify(words)}
+        </Box>
+    )
+}

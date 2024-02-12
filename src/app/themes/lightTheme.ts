@@ -10,7 +10,17 @@ const roboto = Roboto({
 
 const lightTheme = createTheme({
     palette: {
-        mode: 'light'
+        mode: 'light',
+        primary: {
+            light: ' #df487f',
+            main: '#d81b60',
+            dark: '#971243',
+        },
+        secondary: {
+            light: '#ffd453',
+            main: '#ffca28',
+            dark: '#b28d1c',
+        },
     },
 
     typography: {

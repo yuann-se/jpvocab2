@@ -23,7 +23,6 @@ model Word {
   word            String[]
   transcription   String[]
   translation     String[]
-  importance      String
   completePercent Int      @default(0)
   userId          Int
   user            User     @relation(fields: [userId], references: [id])

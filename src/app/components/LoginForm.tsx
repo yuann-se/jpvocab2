@@ -18,14 +18,14 @@ export default function LoginForm() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        signIn('credentials', {
+        const res = await signIn('credentials', {
             email: data.get('email'),
             password: data.get('password'),
             callbackUrl: `${window.location.origin}/`,
-            redirect: false
+            // redirect: false
         })
-            .then((data) => console.log(data))
-            .catch(err => console.log(err))
+
+        console.log(res)
     }
 
     return (
@@ -47,6 +47,7 @@ export default function LoginForm() {
             <Typography component="h1" variant="h5">
                 {JSON.stringify(session)}
             </Typography>
+
             <Box
                 component="form"
                 onSubmit={handleSubmit}
@@ -86,7 +87,7 @@ export default function LoginForm() {
                 <Divider>or</Divider>
 
                 <Button
-                    type="submit"
+                    // type="submit"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 2, mb: 2 }}
