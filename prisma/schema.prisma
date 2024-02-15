@@ -20,10 +20,11 @@ model User {
 
 model Word {
   id              Int      @id @default(autoincrement())
-  word            String[]
+  writing         String[]
   transcription   String[]
   translation     String[]
   completePercent Int      @default(0)
+  isLearned       Boolean  @default(false)
   userId          Int
   user            User     @relation(fields: [userId], references: [id])
 }
