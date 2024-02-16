@@ -1,0 +1,19 @@
+@import './variables';
+
+.homePage {
+    // padding: 1em;
+
+    .header {
+        height: 3em;
+        padding: 1em;
+        background-color: $bg;
+        display: flex;
+        align-items: center;
+
+        .signOutButton {
+            color: $textLight;
+        }
+    }
+
+
+}

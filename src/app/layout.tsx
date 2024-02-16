@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import "./styles/globals.css";
+import "../styles/globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { NextAuthProvider } from "./components/NextAuthProvider";
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { getServerSession } from "next-auth";
 import authOptions from "./lib/authOptions";
+import lightTheme from "../themes/lightTheme";
 
 
 export const metadata: Metadata = {
@@ -19,11 +20,12 @@ async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>)
       <body>
         <NextAuthProvider>
           <AppRouterCacheProvider>
-            {/* <ThemeProvider theme> */}
-            <main>
-              {children}
-            </main>
-            {/* </ThemeProvider> */}
+            <ThemeProvider theme={lightTheme}>
+              <main>
+                <CssBaseline />
+                {children}
+              </main>
+            </ThemeProvider>
           </AppRouterCacheProvider>
         </NextAuthProvider>
       </body>

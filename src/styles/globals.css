@@ -1,0 +1,86 @@
+:root {}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+form {
+  padding: 0 1em;
+  max-width: 400px;
+}
+
+/* @font-face {
+  font-family: 'NotoSans';
+  src: local('NotoSans-Light'),
+    url('../fonts/NotoSans-Light.woff2') format('woff2'),
+    url('../fonts/NotoSans-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSans';
+  src: local('NotoSans-Regular'),
+    url('../fonts/NotoSans-Regular.woff2') format('woff2'),
+    url('../fonts/NotoSans-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSans';
+  src: local('NotoSans-Medium'),
+    url('../fonts/NotoSans-Medium.woff2') format('woff2'),
+    url('../fonts/NotoSans-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSansJP';
+  src: local('NotoSansJP-Light'),
+    url('../fonts/NotoSansJP-Light.woff2') format('woff2'),
+    url('../fonts/NotoSansJP-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  unicode-range: U+3000-303f, U+3040-309f, U+30A0-30FF, U+ff00-ffef, U+4e00-9faf;
+}
+
+@font-face {
+  font-family: 'NotoSansJP';
+  src: local('NotoSansJP-Regular'),
+    url('../fonts/NotoSansJP-Regular.woff2') format('woff2'),
+    url('../fonts/NotoSansJP-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  unicode-range: U+3000-303f, U+3040-309f, U+30A0-30FF, U+ff00-ffef, U+4e00-9faf;
+}
+
+@font-face {
+  font-family: 'NotoSansJP';
+  src: local('NotoSansJP-Medium'),
+    url('../fonts/NotoSansJP-Medium.woff2') format('woff2'),
+    url('../fonts/NotoSansJP-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  unicode-range: U+3000-303f, U+3040-309f, U+30A0-30FF, U+ff00-ffef, U+4e00-9faf;
+} */
+
+/* @media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+} */

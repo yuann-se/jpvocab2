@@ -18,14 +18,12 @@ export default function LoginForm() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        const res = await signIn('credentials', {
+        await signIn('credentials', {
             email: data.get('email'),
             password: data.get('password'),
             callbackUrl: `${window.location.origin}/`,
             // redirect: false
         })
-
-        console.log(res)
     }
 
     return (

@@ -4,6 +4,7 @@ import authOptions from "./lib/authOptions"
 import SignOutButton from "./components/SignOutButton"
 import { db } from "./lib/db"
 import styles from '@/styles/main.module.scss'
+import CreateWordForm from "./components/CreateWordForm"
 
 // interface Props {
 //     words: {
@@ -39,10 +40,10 @@ export default async function Home() {
     return (
         <Box className={styles.homePage}>
             <Box className={styles.header}>
-
+                <SignOutButton />
+                <CreateWordForm />
             </Box>
-            <Typography>Home</Typography>
-            <SignOutButton />
+
             {JSON.stringify(words)}
         </Box>
     )

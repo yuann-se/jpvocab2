@@ -26,8 +26,11 @@
         "./src/*"
       ],
       "@/styles/*": [
-        "./src/app/styles/*"
-      ]
+        "./src/styles/*"
+      ],
+      // "@/fonts/*": [
+      //   "./src/fonst/*"
+      // ]
     }
   },
   "include": [

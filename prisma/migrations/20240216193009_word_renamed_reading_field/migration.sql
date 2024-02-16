@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Word" ALTER COLUMN "reading" SET DEFAULT ARRAY[]::TEXT[];
