@@ -3,9 +3,8 @@ import "../styles/globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { NextAuthProvider } from "./components/NextAuthProvider";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { getServerSession } from "next-auth";
-import authOptions from "./lib/authOptions";
 import lightTheme from "../themes/lightTheme";
+import WordsProvider from "./components/providers/WordsProvider";
 
 
 export const metadata: Metadata = {
@@ -13,18 +12,18 @@ export const metadata: Metadata = {
 };
 
 async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const session = await getServerSession(authOptions)
-
   return (
     <html lang="en">
       <body>
         <NextAuthProvider>
           <AppRouterCacheProvider>
             <ThemeProvider theme={lightTheme}>
-              <main>
-                <CssBaseline />
-                {children}
-              </main>
+              <WordsProvider>
+                <main>
+                  <CssBaseline />
+                  {children}
+                </main>
+              </WordsProvider>
             </ThemeProvider>
           </AppRouterCacheProvider>
         </NextAuthProvider>

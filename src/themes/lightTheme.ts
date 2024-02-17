@@ -1,32 +1,34 @@
 'use client'
-// import { Noto_Sans, Noto_Sans_JP } from 'next/font/google'
-import { createTheme } from '@mui/material/styles'
-import NotoSansLightWoff2 from '../../public/fonts/NotoSans-Light.woff2';
+import { createTheme, getContrastRatio } from '@mui/material/styles'
 
-// const noto_sans = Noto_Sans({
-//     weight: ['300', '400', '500', '700'],
-//     subsets: ['latin']
-// })
-
-// const noto_sans_jp = Noto_Sans_JP({
-//     weight: ['300', '400', '500', '700'],
-//     preload: false,
-//     // adjustFontFallback: false,
-// })
+const primaryMain = '#d81b60'
+const primaryDark = '#971243'
+const contrastThreshold = 4.5
+export const typographyLight = 'whitesmoke'
+const typographyDark = '#333333'
 
 const lightTheme = createTheme({
     palette: {
         mode: 'light',
         primary: {
             light: '#df487f',
-            main: '#d81b60',
-            dark: '#971243',
+            main: primaryMain,
+            dark: primaryDark,
+            contrastText: getContrastRatio(primaryMain, '#fff') > contrastThreshold
+                ? typographyLight
+                : primaryDark,
         },
         secondary: {
             light: '#ffd453',
             main: '#ffca28',
             dark: '#b28d1c',
         },
+        // background: {
+        //     default: 'whitesmoke'
+        // },
+        text: {
+        },
+        contrastThreshold: contrastThreshold,
     },
 
     components: {
@@ -35,26 +37,46 @@ const lightTheme = createTheme({
                 root: {
                     textTransform: 'none'
                 }
+            },
+
+            variants: [
+                // {
+                //     props: { variant: 'text' },
+                //     style: {
+                //         color: 'whitesmoke'
+                //     }
+                // },
+                {
+                    props: { variant: 'contained' },
+                    style: {
+                        boxShadow: 'none',
+                        color: typographyLight
+                    }
+                }
+            ]
+        },
+
+        MuiContainer: {
+            styleOverrides: {
+                root: {
+                    height: '100%'
+                }
             }
         },
 
-        MuiCssBaseline: {
-            styleOverrides: `
-            @font-face {
-                font-family: 'NotoSans';
-                src: local('NotoSans-Light'),
-                  url(${NotoSansLightWoff2}) format('woff2'),
-                  url('../fonts/NotoSans-Light.woff') format('woff');
-                font-weight: 300;
-                font-style: normal;
-              }
-          `
-        }
+        // MuiGrid: {
+        //     styleOverrides: {
+        //         root: {
+        //             height: 'fit-content'
+        //         }
+        //     }
+        // }
+
     },
 
-    // typography: {
-    //     fontFamily: `${noto_sans.style.fontFamily, noto_sans_jp.style.fontFamily}`,
-    // },
+    typography: {
+        fontFamily: '"NotoSans"," NotoSansJP", "Arial", sans-serif'
+    },
 })
 
 export default lightTheme

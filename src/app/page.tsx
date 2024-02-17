@@ -1,50 +1,31 @@
-import { Box, Typography } from "@mui/material"
-import { getServerSession } from "next-auth"
-import authOptions from "./lib/authOptions"
-import SignOutButton from "./components/SignOutButton"
-import { db } from "./lib/db"
+import { Box, Container } from "@mui/material"
 import styles from '@/styles/main.module.scss'
-import CreateWordForm from "./components/CreateWordForm"
+import WordsList from '@/components/WordsList'
+import LogoutButton from "@/app/components/LogoutButton"
+import CreateWordButton from "./components/CreateWordButton"
 
-// interface Props {
-//     words: {
-//         id: Number,
-//         word: String[],
-//         transcription: String[],
-//         translation: String[],
-//         completePercent: Number,
-//         userId: Number,
-//         // user            User     @relation(fields: [userId], references: [id])
-//     }
-// }
 
-const getWords = async () => {
-    const session = await getServerSession(authOptions)
-
-    const words = await db.word.findMany({
-        where: {
-            userId: Number(session?.user.id)
-        },
-        orderBy: {
-            completePercent: 'asc',
-        },
-    })
-
-    return words
-}
-
-export default async function Home() {
-
-    const words = await getWords()
+export default function Home() {
 
     return (
         <Box className={styles.homePage}>
-            <Box className={styles.header}>
-                <SignOutButton />
-                <CreateWordForm />
+            <Box
+                sx={{
+                    backgroundColor: 'primary.main',
+                    height: '3.5em'
+                }}
+                component={'header'}
+            // className = {styles.header}
+            >
+                <Container
+                    sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                >
+                    <CreateWordButton />
+                    <LogoutButton />
+                </Container>
             </Box>
 
-            {JSON.stringify(words)}
+            <WordsList />
         </Box>
     )
 }

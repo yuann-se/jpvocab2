@@ -12,6 +12,10 @@ body {
   overflow-x: hidden;
 }
 
+main {
+  height: 100vh;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -22,11 +26,11 @@ form {
   max-width: 400px;
 }
 
-/* @font-face {
+@font-face {
   font-family: 'NotoSans';
   src: local('NotoSans-Light'),
-    url('../fonts/NotoSans-Light.woff2') format('woff2'),
-    url('../fonts/NotoSans-Light.woff') format('woff');
+    url('../../public/fonts/NotoSans-Light.woff2') format('woff2'),
+    url('../../public/fonts/NotoSans-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
 }
@@ -34,8 +38,8 @@ form {
 @font-face {
   font-family: 'NotoSans';
   src: local('NotoSans-Regular'),
-    url('../fonts/NotoSans-Regular.woff2') format('woff2'),
-    url('../fonts/NotoSans-Regular.woff') format('woff');
+    url('../../public/fonts/NotoSans-Regular.woff2') format('woff2'),
+    url('../../public/fonts/NotoSans-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
@@ -43,8 +47,8 @@ form {
 @font-face {
   font-family: 'NotoSans';
   src: local('NotoSans-Medium'),
-    url('../fonts/NotoSans-Medium.woff2') format('woff2'),
-    url('../fonts/NotoSans-Medium.woff') format('woff');
+    url('../../public/fonts/NotoSans-Medium.woff2') format('woff2'),
+    url('../../public/fonts/NotoSans-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
 }
@@ -52,8 +56,8 @@ form {
 @font-face {
   font-family: 'NotoSansJP';
   src: local('NotoSansJP-Light'),
-    url('../fonts/NotoSansJP-Light.woff2') format('woff2'),
-    url('../fonts/NotoSansJP-Light.woff') format('woff');
+    url('../../public/fonts/NotoSansJP-Light.woff2') format('woff2'),
+    url('../../public/fonts/NotoSansJP-Light.woff') format('woff');
   font-weight: 300;
   font-style: normal;
   unicode-range: U+3000-303f, U+3040-309f, U+30A0-30FF, U+ff00-ffef, U+4e00-9faf;
@@ -62,8 +66,8 @@ form {
 @font-face {
   font-family: 'NotoSansJP';
   src: local('NotoSansJP-Regular'),
-    url('../fonts/NotoSansJP-Regular.woff2') format('woff2'),
-    url('../fonts/NotoSansJP-Regular.woff') format('woff');
+    url('../../public/fonts/NotoSansJP-Regular.woff2') format('woff2'),
+    url('../../public/fonts/NotoSansJP-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   unicode-range: U+3000-303f, U+3040-309f, U+30A0-30FF, U+ff00-ffef, U+4e00-9faf;
@@ -72,12 +76,12 @@ form {
 @font-face {
   font-family: 'NotoSansJP';
   src: local('NotoSansJP-Medium'),
-    url('../fonts/NotoSansJP-Medium.woff2') format('woff2'),
-    url('../fonts/NotoSansJP-Medium.woff') format('woff');
+    url('../../public/fonts/NotoSansJP-Medium.woff2') format('woff2'),
+    url('../../public/fonts/NotoSansJP-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
   unicode-range: U+3000-303f, U+3040-309f, U+30A0-30FF, U+ff00-ffef, U+4e00-9faf;
-} */
+}
 
 /* @media (prefers-color-scheme: dark) {
   html {

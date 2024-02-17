@@ -1,17 +1,35 @@
 @import './variables';
 
 .homePage {
-    // padding: 1em;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
-    .header {
-        height: 3em;
-        padding: 1em;
-        background-color: $bg;
-        display: flex;
-        align-items: center;
+    // .header {
+    //     height: 3.5em;
 
-        .signOutButton {
-            color: $textLight;
+    //     .signOutButton {
+    //         // color: $textLight;
+    //     }
+
+    //     .createWordButton {
+    //         color: $textLight;
+    //     }
+    // }
+
+    .wordsList {
+        flex-grow: 1;
+        padding-top: 1em;
+
+        .wordsListItem {
+            padding: 16px 24px;
+            border-radius: 5px;
+            background-color: whitesmoke;
+            cursor: pointer;
+
+            &:not(:last-child) {
+                margin-bottom: 1em;
+            }
         }
     }
 

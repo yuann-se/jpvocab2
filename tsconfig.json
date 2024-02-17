@@ -28,9 +28,9 @@
       "@/styles/*": [
         "./src/styles/*"
       ],
-      // "@/fonts/*": [
-      //   "./src/fonst/*"
-      // ]
+      "@/components/*": [
+        "./src/app/components/*"
+      ],
     }
   },
   "include": [
