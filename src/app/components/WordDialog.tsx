@@ -1,6 +1,6 @@
 'use client'
-import { Box, Button, Dialog, DialogActions, TextField } from '@mui/material'
-import React from 'react'
+import { Box, Button, Chip, Dialog, DialogActions, TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import { IWord } from './providers/WordsProvider'
 
 
@@ -11,7 +11,26 @@ interface IProps {
     word?: IWord | null
 }
 
-function WordDialog({ open, onClose, variant }: IProps) {
+function WordDialog({ open, onClose, variant, word }: IProps) {
+
+    const [writings, setWritings] = useState(word?.writing || [])
+    const [selectedWriting, setSelectedWriting] = useState('')
+    const [readings, setReadings] = useState(word?.reading || [])
+    const [selectedReading, setSelectedReading] = useState('')
+    const [translations, setTranslations] = useState(word?.translation || [])
+    const [selectedTranslation, setSelectedTranslation] = useState('')
+
+    useEffect(() => {
+        if (open && !!word) {
+            setWritings(word.writing)
+            setReadings(word.reading)
+            setTranslations(word.translation)
+            setSelectedWriting('')
+            setSelectedReading('')
+            setSelectedTranslation('')
+        }
+    }, [open])
+
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -34,6 +53,7 @@ function WordDialog({ open, onClose, variant }: IProps) {
         console.log(data)
     }
 
+
     return (
         <Box>
             <Dialog
@@ -47,44 +67,92 @@ function WordDialog({ open, onClose, variant }: IProps) {
                     sx={{ mt: 1 }}
                 >
                     <TextField
+                        value={selectedWriting}
+                        onChange={(e) => setSelectedWriting(e.target.value)}
                         margin="normal"
-                        required
                         fullWidth
                         id="writing"
-                        label="Word"
+                        placeholder='Writing'
                         name="writing"
                         autoFocus
+                        autoComplete='off'
+                        variant='filled'
                     />
 
+                    {writings.map(text =>
+                        <Chip
+                            key={text}
+                            onDelete={() => setWritings(prev => prev.filter(item => item !== text))}
+                            label={text}
+                            variant='outlined'
+                            color="primary"
+                        // sx={{ backgroundColor: 'secondary.light' }}
+                        />
+                    )}
+
                     <TextField
+                        value={selectedReading}
+                        onChange={(e) => setSelectedReading(e.target.value)}
                         margin="normal"
                         fullWidth
                         id="reading"
-                        label="Reading"
+                        placeholder="Reading"
                         name="reading"
                         autoFocus
+                        autoComplete='off'
+                        variant='filled'
                     />
 
+                    {readings.map(text =>
+                        <Chip
+                            key={text}
+                            onDelete={() => setReadings(prev => prev.filter(item => item !== text))}
+                            label={text}
+                        />
+                    )}
+
                     <TextField
+                        value={selectedTranslation}
+                        onChange={(e) => setSelectedTranslation(e.target.value)}
                         margin="normal"
                         fullWidth
                         id="translation"
-                        label="Translation"
+                        placeholder="Translation"
                         name="translation"
                         autoFocus
+                        autoComplete='off'
+                        variant='filled'
                     />
 
+                    {translations.map(text =>
+                        <Chip
+                            key={text}
+                            onDelete={() => setTranslations(prev => prev.filter(item => item !== text))}
+                            label={text}
+                        />
+                    )}
+
                     <DialogActions>
+                        {variant === 'edit' &&
+                            <Button
+                                variant="contained"
+                                color='error'
+                            >
+                                Delete
+                            </Button>
+                        }
+
                         <Button
-                            variant="contained"
+                            variant="outlined"
                             onClick={onClose}
                         >
                             Cancel
                         </Button>
 
                         <Button
-                            type="submit"
+                            // type="submit"
                             variant="contained"
+                            disabled={!writings.length}
                         >
                             Save
                         </Button>

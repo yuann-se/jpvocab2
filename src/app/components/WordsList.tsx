@@ -2,7 +2,7 @@
 import { Box, CircularProgress, Container, Grid, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { IWord, useWordsContext } from './providers/WordsProvider'
-import styles from '@/styles/main.module.scss'
+import '@/styles/main.scss'
 import WordsListItem from './WordsListItem'
 import WordDialog from './WordDialog'
 
@@ -12,7 +12,7 @@ function WordsList() {
     const [selectedWord, setSelectedWord] = useState<IWord | null>(null)
 
     return (
-        <Box className={styles.wordsList}>
+        <Box className={'wordsList'}>
             <WordDialog
                 open={!!selectedWord}
                 onClose={() => setSelectedWord(null)}
@@ -27,7 +27,7 @@ function WordsList() {
                     <Grid
                         container
                         key={word.id}
-                        className={styles.wordsListItem}
+                        className={'wordsListItem'}
                         onClick={() => setSelectedWord(word)}
                     >
                         <WordsListItem word={word} />

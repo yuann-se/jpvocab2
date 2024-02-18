@@ -1,31 +1,41 @@
 'use client'
 import { createTheme, getContrastRatio } from '@mui/material/styles'
 
-const primaryMain = '#d81b60'
-const primaryDark = '#971243'
-const contrastThreshold = 4.5
-export const typographyLight = 'whitesmoke'
+const primaryMain = '#664dce'
+const primaryDark = '#4f41b7'
+const primaryLight = '#f4edff'
+
+const secondaryMain = '#f886ae'
+const secondaryDark = '#b28d1c'
+const secondaryLight = '#ffedfa'
+// const se
+const contrastThreshold = 3
+export const typographyLight = '#fff'
 const typographyDark = '#333333'
+const bgLight = '#faf9fc'
 
 const lightTheme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            light: '#df487f',
+            light: primaryLight,
             main: primaryMain,
             dark: primaryDark,
-            contrastText: getContrastRatio(primaryMain, '#fff') > contrastThreshold
-                ? typographyLight
-                : primaryDark,
+            // contrastText: getContrastRatio(primaryMain, '#fff') > contrastThreshold
+            //     ? typographyLight
+            //     : primaryDark,
         },
         secondary: {
-            light: '#ffd453',
-            main: '#ffca28',
-            dark: '#b28d1c',
+            light: secondaryLight,
+            main: secondaryMain,
+            dark: secondaryDark,
+            // contrastText: getContrastRatio(secondaryMain, '#fff') > contrastThreshold
+            //     ? typographyLight
+            //     : secondaryDark,
         },
-        // background: {
-        //     default: 'whitesmoke'
-        // },
+        background: {
+            default: bgLight
+        },
         text: {
         },
         contrastThreshold: contrastThreshold,
@@ -64,6 +74,60 @@ const lightTheme = createTheme({
             }
         },
 
+        MuiTextField: {
+            variants: [
+                {
+                    props: { variant: 'filled' },
+                    style: {
+                        backgroundColor: 'white'
+                    }
+                },
+                // {
+                //     props: { variant: 'standard' },
+                //     style: {
+                //     }
+                // }
+            ],
+        },
+
+        MuiFilledInput: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: primaryLight,
+                    borderRadius: 4,
+                    '&:hover': {
+                        backgroundColor: primaryLight,
+                    },
+                    '&.Mui-focused': {
+                        backgroundColor: bgLight,
+                    },
+                    '&::after': {
+                        borderBottomColor: primaryDark
+                    },
+
+                    '&::before': {
+                        opacity: 0
+                    }
+
+                },
+                input: {
+                    padding: '15px 12px',
+                }
+            }
+        },
+
+        MuiChip: {
+            styleOverrides: {
+                root: {
+                    color: typographyDark
+                    // backgroundColor: primaryLight
+                },
+                // deleteIconMedium: {
+                //     color: primaryMain
+                // }
+            }
+        }
+
         // MuiGrid: {
         //     styleOverrides: {
         //         root: {
@@ -75,7 +139,7 @@ const lightTheme = createTheme({
     },
 
     typography: {
-        fontFamily: '"NotoSans"," NotoSansJP", "Arial", sans-serif'
+        fontFamily: '"NotoSans"," NotoSansJP", "Arial", sans-serif',
     },
 })
 

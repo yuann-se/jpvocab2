@@ -19,16 +19,23 @@
 
     .wordsList {
         flex-grow: 1;
-        padding-top: 1em;
+        padding-top: .5em;
 
         .wordsListItem {
             padding: 16px 24px;
             border-radius: 5px;
-            background-color: whitesmoke;
+            background-color: white;
             cursor: pointer;
+            box-shadow: 1px 1px 5px -1px #664dce1c;
+            // border-bottom: 1px solid lightgray;
 
             &:not(:last-child) {
-                margin-bottom: 1em;
+                margin-bottom: .5em;
+            }
+
+            .MuiGrid-root {
+                display: flex;
+                align-items: center;
             }
         }
     }

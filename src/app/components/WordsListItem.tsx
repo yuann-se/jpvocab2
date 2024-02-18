@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import { IWord } from './providers/WordsProvider'
-import styles from '@/styles/main.module.scss'
+import '@/styles/main.scss'
 
 
 interface IProps {
@@ -10,10 +10,7 @@ interface IProps {
 
 function WordsListItem({ word }: IProps) {
     return (
-        <Grid
-            container
-            className={styles.wordsListItem}
-        >
+        <>
             <Grid item xs={10}>
                 <Grid container>
                     <Grid item xs={12} sm={4}>
@@ -34,9 +31,9 @@ function WordsListItem({ word }: IProps) {
             </Grid>
 
             <Grid item xs={2}>
-                <Typography>{word.completePercent}</Typography>
+                <Typography>{word.completePercent}%</Typography>
             </Grid>
-        </Grid>
+        </>
     )
 }
 
