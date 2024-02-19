@@ -1,7 +1,8 @@
 'use client'
-import { Box, Button, Chip, Dialog, DialogActions, TextField } from '@mui/material'
+import { Box, Button, Chip, Dialog, DialogActions, DialogContent, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { IWord } from './providers/WordsProvider'
+import { createWord, deleteWord } from '../api/word/handlers'
 
 
 interface IProps {
@@ -20,6 +21,8 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
     const [translations, setTranslations] = useState(word?.translation || [])
     const [selectedTranslation, setSelectedTranslation] = useState('')
 
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+
     useEffect(() => {
         if (open && !!word) {
             setWritings(word.writing)
@@ -31,28 +34,38 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
         }
     }, [open])
 
-
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-        const formData = new FormData(event.currentTarget)
-
-        const response = await fetch('/api/word', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                writing: [formData.get('writing')],
-                reading: [formData.get('reading')],
-                translation: [formData.get('translation')],
+    const handleSave = async () => {
+        try {
+            await createWord({
+                writing: writings,
+                reading: readings,
+                translation: translations
             })
-        })
+            onClose()
 
-        const data = await response.json()
-
-        console.log(data)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
+    const handleDelete = async () => {
+        if (!word) return
+        try {
+            await deleteWord(word.id)
+            onClose()
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const addWriting = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key !== 'Enter') return
+        if (!selectedWriting) return
+
+        setWritings(prev => [...prev, selectedWriting])
+        setSelectedWriting('')
+    }
 
     return (
         <Box>
@@ -60,15 +73,39 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
                 open={open}
                 onClose={onClose}
             >
+                <Dialog
+                    open={isDeleteDialogOpen}
+                    onClose={() => setIsDeleteDialogOpen(false)}
+                >
+                    <DialogContent>
+                        Are you sure you want to delete selected word?
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            variant='outlined'
+                            onClick={() => setIsDeleteDialogOpen(false)}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            variant='contained'
+                            color='error'
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
                 <Box
                     component="form"
-                    onSubmit={handleSubmit}
                     noValidate
                     sx={{ mt: 1 }}
                 >
                     <TextField
                         value={selectedWriting}
                         onChange={(e) => setSelectedWriting(e.target.value)}
+                        onKeyDown={addWriting}
                         margin="normal"
                         fullWidth
                         id="writing"
@@ -76,7 +113,7 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
                         name="writing"
                         autoFocus
                         autoComplete='off'
-                        variant='filled'
+                    // variant='filled'
                     />
 
                     {writings.map(text =>
@@ -100,7 +137,7 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
                         name="reading"
                         autoFocus
                         autoComplete='off'
-                        variant='filled'
+                    // variant='filled'
                     />
 
                     {readings.map(text =>
@@ -121,7 +158,7 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
                         name="translation"
                         autoFocus
                         autoComplete='off'
-                        variant='filled'
+                    // variant='filled'
                     />
 
                     {translations.map(text =>
@@ -137,6 +174,7 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
                             <Button
                                 variant="contained"
                                 color='error'
+                                onClick={() => setIsDeleteDialogOpen(true)}
                             >
                                 Delete
                             </Button>
@@ -150,15 +188,16 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
                         </Button>
 
                         <Button
-                            // type="submit"
                             variant="contained"
-                            disabled={!writings.length}
+                            // disabled={!writings.length}
+                            onClick={handleSave}
                         >
                             Save
                         </Button>
                     </DialogActions>
                 </Box>
             </Dialog>
+
         </Box>
     )
 }

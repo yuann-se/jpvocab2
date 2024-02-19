@@ -90,31 +90,31 @@ const lightTheme = createTheme({
             ],
         },
 
-        MuiFilledInput: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: primaryLight,
-                    borderRadius: 4,
-                    '&:hover': {
-                        backgroundColor: primaryLight,
-                    },
-                    '&.Mui-focused': {
-                        backgroundColor: bgLight,
-                    },
-                    '&::after': {
-                        borderBottomColor: primaryDark
-                    },
+        // MuiFilledInput: {
+        //     styleOverrides: {
+        //         root: {
+        //             backgroundColor: primaryLight,
+        //             borderRadius: 4,
+        //             '&:hover': {
+        //                 backgroundColor: primaryLight,
+        //             },
+        //             '&.Mui-focused': {
+        //                 backgroundColor: bgLight,
+        //             },
+        //             '&::after': {
+        //                 borderBottomColor: primaryDark
+        //             },
 
-                    '&::before': {
-                        opacity: 0
-                    }
+        //             '&::before': {
+        //                 opacity: 0
+        //             }
 
-                },
-                input: {
-                    padding: '15px 12px',
-                }
-            }
-        },
+        //         },
+        //         input: {
+        //             padding: '15px 12px',
+        //         }
+        //     }
+        // },
 
         MuiChip: {
             styleOverrides: {
