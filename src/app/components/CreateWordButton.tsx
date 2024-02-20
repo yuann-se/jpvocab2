@@ -2,7 +2,7 @@
 import { IconButton } from '@mui/material'
 import React, { useState } from 'react'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import WordDialog from './WordDialog'
+import WordDialog from './WordDialog/WordDialog'
 
 function CreateWordButton() {
     const [isDialogOpen, setIsDialogOpen] = useState(false)

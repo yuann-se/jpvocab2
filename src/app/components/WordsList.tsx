@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { IWord, useWordsContext } from './providers/WordsProvider'
 import '@/styles/main.scss'
 import WordsListItem from './WordsListItem'
-import WordDialog from './WordDialog'
+import WordDialog from './WordDialog/WordDialog'
 
 
 function WordsList() {
