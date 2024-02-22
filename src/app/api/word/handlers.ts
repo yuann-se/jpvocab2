@@ -1,4 +1,4 @@
-import { IPostWord } from "./route"
+import { IPostWord, IPutWord } from "./route"
 
 export async function createWord({ writing, reading, translation }: IPostWord) {
     const response = await fetch('/api/word', {
@@ -19,7 +19,7 @@ export async function createWord({ writing, reading, translation }: IPostWord) {
         throw new Error(data.error)
     }
 
-    return data
+    return data.word
 }
 
 export async function deleteWord(id: number) {
@@ -38,4 +38,27 @@ export async function deleteWord(id: number) {
     }
 
     return data
+}
+
+export async function updateWord({ id, writing, reading, translation }: IPutWord) {
+    const response = await fetch('/api/word', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id,
+            writing,
+            reading,
+            translation,
+        })
+    })
+
+    const data = await response.json()
+
+    if (!response.ok || data.error) {
+        throw new Error(JSON.stringify(data.error))
+    }
+
+    return data.word
 }

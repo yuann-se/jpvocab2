@@ -7,6 +7,16 @@ import WordsListItem from './WordsListItem'
 import WordDialog from './WordDialog/WordDialog'
 
 
+const defaultWord: IWord = {
+    id: 0,
+    writing: [],
+    reading: [],
+    translation: [],
+    completePercent: 0,
+    isLearned: false,
+    userId: 0
+}
+
 function WordsList() {
     const { words } = useWordsContext()
     const [selectedWord, setSelectedWord] = useState<IWord | null>(null)
@@ -16,7 +26,7 @@ function WordsList() {
             <WordDialog
                 open={!!selectedWord}
                 onClose={() => setSelectedWord(null)}
-                word={selectedWord}
+                word={selectedWord || defaultWord}
                 variant='edit'
             />
 

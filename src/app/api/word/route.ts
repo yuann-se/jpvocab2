@@ -10,6 +10,10 @@ export interface IPostWord {
     translation: IWord['translation']
 }
 
+export interface IPutWord extends IPostWord {
+    id: IWord['id']
+}
+
 export async function POST(req: Request) {
     try {
         const { writing, reading, translation }: IPostWord = await req.json()
@@ -102,6 +106,45 @@ export async function DELETE(req: Request) {
         return NextResponse.json({
             status: 201,
             id
+        })
+
+    } catch (error) {
+        return NextResponse.json({
+            status: 500,
+            error: error
+        })
+    }
+}
+
+export async function PUT(req: Request) {
+    try {
+        const { id, writing, reading, translation }: IPutWord = await req.json()
+
+        const word = await db.word.findUnique({
+            where: {
+                id: id
+            }
+        })
+
+        if (!word) {
+            return NextResponse.json({
+                status: 404,
+                error: "Word not found"
+            })
+        }
+
+        const updatedWord = await db.word.update({
+            where: {
+                id: id,
+            },
+            data: {
+                writing, reading, translation
+            },
+        })
+
+        return NextResponse.json({
+            status: 201,
+            word: updatedWord
         })
 
     } catch (error) {

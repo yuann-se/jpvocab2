@@ -1,17 +1,19 @@
-import { Box, Button, Chip, Dialog, DialogActions, DialogContent, TextField } from '@mui/material'
+import { Backdrop, Box, Button, Chip, CircularProgress, Dialog, DialogActions, DialogContent, Grid, TextField } from '@mui/material'
 import React from 'react'
-import { IFieldValues, IWordValues } from './WordDialog'
+import { EArrayNames, IFieldValues, IWordValues } from './WordDialog'
 
 
 interface IProps {
     open: boolean,
     onClose: () => void,
+    isLoading: boolean,
     wordValues: IWordValues,
     fieldValues: IFieldValues,
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    handleAdd: (e: React.KeyboardEvent<HTMLInputElement>) => void,
-    handleRemove: (e: React.MouseEvent<SVGElement>) => void,
-    handleSave: () => Promise<void>
+    handleAdd: (name: EArrayNames) => (e: React.KeyboardEvent<HTMLInputElement>) => void,
+    handleRemove: (name: EArrayNames, value: string) => (e: React.MouseEvent<SVGElement>) => void,
+    handleCreate: () => Promise<void>,
+    handleSave: () => Promise<void>,
     variant: 'create' | 'edit',
     openDeleteDialog: () => void
 }
@@ -19,128 +21,163 @@ interface IProps {
 function WordDialogContent({
     open,
     onClose,
+    isLoading,
     variant,
     fieldValues,
     wordValues,
     handleChange,
     handleAdd,
     handleRemove,
+    handleCreate,
     handleSave,
     openDeleteDialog,
 }: IProps) {
     return (
-        <Box>
-            <Dialog
-                open={open}
-                onClose={onClose}
+        <Dialog
+            open={open}
+            onClose={onClose}
+            fullWidth
+        >
+            <Box
+                component="form"
+                noValidate
+                sx={{ mt: 1, minWidth: '100%' }}
             >
-                <Box
-                    component="form"
-                    noValidate
-                    sx={{ mt: 1 }}
-                >
-                    <TextField
-                        value={fieldValues.selectedWriting}
-                        onChange={handleChange}
-                        onKeyDown={handleAdd}
-                        margin="normal"
-                        fullWidth
-                        id="writing"
-                        inputProps={{ 'data-array-name': 'writings' }}
-                        placeholder='Writing'
-                        name="selectedWriting"
-                        autoFocus
-                        autoComplete='off'
-                    // variant='filled'
-                    />
+                <TextField
+                    value={fieldValues.selectedWriting}
+                    onChange={handleChange}
+                    onKeyDown={handleAdd(EArrayNames.writings)}
+                    margin="normal"
+                    fullWidth
+                    id="writing"
+                    placeholder='Writing'
+                    name="selectedWriting"
+                    autoFocus
+                    autoComplete='off'
+                    disabled={isLoading}
+                />
 
+                <Grid container spacing={1}>
                     {wordValues.writings.map(text =>
-                        <Chip
-                            key={text}
-                            onDelete={handleRemove}
-                            label={text}
-                            variant='outlined'
-                            color="primary"
-                            data-array-name='writings'
-                        // sx={{ backgroundColor: 'secondary.light' }}
-                        />
+                        <Grid key={text} item>
+                            <Chip
+                                onDelete={handleRemove(EArrayNames.writings, text)}
+                                label={text}
+                                variant='outlined'
+                                color="primary"
+                                data-array-name='writings'
+                                disabled={isLoading}
+                            />
+                        </Grid>
                     )}
+                </Grid>
 
-                    <TextField
-                        value={fieldValues.selectedReading}
-                        onChange={handleChange}
-                        onKeyDown={handleAdd}
-                        margin="normal"
-                        fullWidth
-                        id="reading"
-                        placeholder="Reading"
-                        name="selectedReading"
-                        autoFocus
-                        autoComplete='off'
-                    // variant='filled'
-                    />
+                <TextField
+                    value={fieldValues.selectedReading}
+                    onChange={handleChange}
+                    onKeyDown={handleAdd(EArrayNames.readings)}
+                    margin="normal"
+                    fullWidth
+                    id="reading"
+                    placeholder="Reading"
+                    name="selectedReading"
+                    autoFocus
+                    autoComplete='off'
+                    disabled={isLoading}
 
+                />
+
+                <Grid container spacing={1}>
                     {wordValues.readings.map(text =>
-                        <Chip
-                            key={text}
-                            onDelete={handleRemove}
-                            label={text}
-                            data-array-name='readings'
-                        />
+                        <Grid item key={text}>
+                            <Chip
+                                onDelete={handleRemove(EArrayNames.readings, text)}
+                                label={text}
+                                variant='outlined'
+                                color="primary"
+                                disabled={isLoading}
+                            />
+                        </Grid>
                     )}
+                </Grid>
 
-                    <TextField
-                        value={fieldValues.selectedTranslation}
-                        onChange={handleChange}
-                        onKeyDown={handleAdd}
-                        margin="normal"
-                        fullWidth
-                        id="translation"
-                        placeholder="Translation"
-                        name="selectedTranslation"
-                        autoFocus
-                        autoComplete='off'
-                    // variant='filled'
-                    />
+                <TextField
+                    value={fieldValues.selectedTranslation}
+                    onChange={handleChange}
+                    onKeyDown={handleAdd(EArrayNames.translations)}
+                    margin="normal"
+                    fullWidth
+                    id="translation"
+                    placeholder="Translation"
+                    name="selectedTranslation"
+                    autoFocus
+                    autoComplete='off'
+                    disabled={isLoading}
 
+                />
+
+                <Grid container spacing={1}>
                     {wordValues.translations.map(text =>
-                        <Chip
-                            key={text}
-                            onDelete={handleRemove}
-                            label={text}
-                            data-array-name='translations'
-                        />
+                        <Grid item key={text}>
+                            <Chip
+                                onDelete={handleRemove(EArrayNames.translations, text)}
+                                label={text}
+                                variant='outlined'
+                                color="primary"
+                                disabled={isLoading}
+                            />
+                        </Grid>
                     )}
+                </Grid>
 
-                    <DialogActions>
-                        {variant === 'edit' &&
-                            <Button
-                                variant="contained"
-                                color='error'
-                                onClick={openDeleteDialog}
-                            >
-                                Delete
-                            </Button>
-                        }
-
-                        <Button
-                            variant="outlined"
-                            onClick={onClose}
-                        >
-                            Cancel
-                        </Button>
-
+                <DialogActions>
+                    {variant === 'edit' &&
                         <Button
                             variant="contained"
-                            // disabled={!writings.length}
+                            color='error'
+                            onClick={openDeleteDialog}
+                            disabled={isLoading}
+                        >
+                            Delete
+                        </Button>
+                    }
+
+                    <Button
+                        variant="outlined"
+                        onClick={onClose}
+                        disabled={isLoading}
+                    >
+                        Cancel
+                    </Button>
+
+                    {variant === 'edit' &&
+                        <Button
+                            variant="contained"
                             onClick={handleSave}
+                            disabled={isLoading}
                         >
                             Save
                         </Button>
-                    </DialogActions>
-                </Box>
-            </Dialog>
-        </Box>
+                    }
+
+                    {variant === 'create' &&
+                        <Button
+                            variant="contained"
+                            onClick={handleCreate}
+                            disabled={isLoading}
+                        >
+                            Create
+                        </Button>
+                    }
+
+
+                </DialogActions>
+
+                <Backdrop open={isLoading} sx={{ position: 'absolute' }}>
+                    <CircularProgress />
+                </Backdrop>
+            </Box>
+        </Dialog>
     )
 }
 
