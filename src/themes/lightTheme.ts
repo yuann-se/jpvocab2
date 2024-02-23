@@ -138,9 +138,9 @@ const lightTheme = createTheme({
 
     },
 
-    typography: {
-        fontFamily: '"NotoSans"," NotoSansJP", "Arial", sans-serif',
-    },
+    // typography: {
+    //     fontFamily: '"NotoSans","NotoSansJP", "Arial", sans-serif',
+    // },
 })
 
 export default lightTheme

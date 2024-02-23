@@ -5,6 +5,8 @@ import { NextAuthProvider } from "./components/NextAuthProvider";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import lightTheme from "../themes/lightTheme";
 import WordsProvider from "./components/providers/WordsProvider";
+import '@fontsource-variable/noto-sans-jp';
+import '@fontsource-variable/noto-sans';
 
 
 export const metadata: Metadata = {

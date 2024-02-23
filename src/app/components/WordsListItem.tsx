@@ -14,16 +14,28 @@ function WordsListItem({ word }: IProps) {
             <Grid item xs={10}>
                 <Grid container>
                     <Grid item xs={12} sm={4}>
-                        <Typography>{word.writing}</Typography>
+                        <Typography className='writing'>
+                            {word.writing.join(', ')}
+                        </Typography>
                     </Grid>
 
                     <Grid item xs={12} sm={8}>
                         <Grid container>
                             <Grid item xs={12} md={6}>
-                                <Typography>{word.reading}</Typography>
+                                <Typography>
+                                    {word.reading.join(', ')}
+                                </Typography>
                             </Grid>
-                            <Grid item xs={12} md={6}>
-                                <Typography>{word.translation}</Typography>
+                            <Grid
+                                item
+                                xs={12}
+                                md={6}
+                                flexDirection={'column'}
+                                mt={'5px'}
+                            >
+                                {word.translation.map((item, ind) =>
+                                    <Typography key={ind}>&bull; {item}</Typography>
+                                )}
                             </Grid>
                         </Grid>
                     </Grid>

@@ -35,7 +35,12 @@
 
             .MuiGrid-root {
                 display: flex;
-                align-items: center;
+                // align-items: center;
+            }
+
+            .writing {
+                margin-bottom: 5px;
+                font-size: 1.2em;
             }
         }
     }
