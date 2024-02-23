@@ -7,7 +7,7 @@ import { NextAuthOptions } from "next-auth"
 
 const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
-    // secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
 
     session: {
         strategy: "jwt"
