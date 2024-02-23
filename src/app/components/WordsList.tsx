@@ -5,6 +5,8 @@ import { IWord, useWordsContext } from './providers/WordsProvider'
 import '@/styles/main.scss'
 import WordsListItem from './WordsListItem'
 import WordDialog from './WordDialog/WordDialog'
+import Draggable from './Draggable'
+import CreateWordButton from './CreateWordButton'
 
 
 const defaultWord: IWord = {
@@ -43,6 +45,8 @@ function WordsList() {
                         <WordsListItem word={word} />
                     </Grid>
                 ))}
+
+                <CreateWordButton />
             </Container>
         </Box>
     )

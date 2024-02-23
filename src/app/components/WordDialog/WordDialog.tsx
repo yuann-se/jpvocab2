@@ -191,13 +191,12 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
         }))
     }
 
-    const handleRemove = (arrayName: EArrayNames, value: string) =>
-        (e: React.MouseEvent<SVGElement>) => {
-            setWordValues(prev => ({
-                ...prev,
-                [arrayName]: prev[arrayName].filter(text => text !== value)
-            }))
-        }
+    const handleRemove = (arrayName: EArrayNames, value: string) => {
+        setWordValues(prev => ({
+            ...prev,
+            [arrayName]: prev[arrayName].filter(text => text !== value)
+        }))
+    }
 
     return (
         <>

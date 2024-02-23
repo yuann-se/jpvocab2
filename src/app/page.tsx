@@ -24,7 +24,6 @@ export default function Home() {
                         alignItems: 'center'
                     }}
                 >
-                    <CreateWordButton />
                     <LogoutButton />
                 </Container>
             </Box>

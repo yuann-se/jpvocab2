@@ -1,7 +1,7 @@
 import { Backdrop, Box, Button, Chip, CircularProgress, Dialog, DialogActions, DialogContent, Grid, TextField } from '@mui/material'
 import React from 'react'
 import { EArrayNames, IFieldValues, IWordValues } from './WordDialog'
-
+import InputWithChips from '../InputWithChips'
 
 interface IProps {
     open: boolean,
@@ -11,7 +11,7 @@ interface IProps {
     fieldValues: IFieldValues,
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     handleAdd: (name: EArrayNames) => (e: React.KeyboardEvent<HTMLInputElement>) => void,
-    handleRemove: (name: EArrayNames, value: string) => (e: React.MouseEvent<SVGElement>) => void,
+    handleRemove: (name: EArrayNames, value: string) => void,
     handleCreate: () => Promise<void>,
     handleSave: () => Promise<void>,
     variant: 'create' | 'edit',
@@ -43,94 +43,45 @@ function WordDialogContent({
                 noValidate
                 sx={{ mt: 1, minWidth: '100%' }}
             >
-                <TextField
+                <InputWithChips
                     value={fieldValues.selectedWriting}
                     onChange={handleChange}
                     onKeyDown={handleAdd(EArrayNames.writings)}
-                    margin="normal"
-                    fullWidth
-                    id="writing"
                     placeholder='Writing'
                     name="selectedWriting"
-                    autoFocus
-                    autoComplete='off'
                     disabled={isLoading}
+                    chipValues={wordValues.writings}
+                    onDelete={(text) => handleRemove(EArrayNames.writings, text)}
                 />
 
-                <Grid container spacing={1}>
-                    {wordValues.writings.map(text =>
-                        <Grid key={text} item>
-                            <Chip
-                                onDelete={handleRemove(EArrayNames.writings, text)}
-                                label={text}
-                                variant='outlined'
-                                color="primary"
-                                data-array-name='writings'
-                                disabled={isLoading}
-                            />
-                        </Grid>
-                    )}
-                </Grid>
-
-                <TextField
+                <InputWithChips
                     value={fieldValues.selectedReading}
                     onChange={handleChange}
                     onKeyDown={handleAdd(EArrayNames.readings)}
-                    margin="normal"
-                    fullWidth
-                    id="reading"
-                    placeholder="Reading"
+                    placeholder='Reading'
                     name="selectedReading"
-                    autoFocus
-                    autoComplete='off'
                     disabled={isLoading}
-
+                    chipValues={wordValues.readings}
+                    onDelete={(text) => handleRemove(EArrayNames.readings, text)}
                 />
 
-                <Grid container spacing={1}>
-                    {wordValues.readings.map(text =>
-                        <Grid item key={text}>
-                            <Chip
-                                onDelete={handleRemove(EArrayNames.readings, text)}
-                                label={text}
-                                variant='outlined'
-                                color="primary"
-                                disabled={isLoading}
-                            />
-                        </Grid>
-                    )}
-                </Grid>
-
-                <TextField
+                <InputWithChips
                     value={fieldValues.selectedTranslation}
                     onChange={handleChange}
                     onKeyDown={handleAdd(EArrayNames.translations)}
-                    margin="normal"
-                    fullWidth
-                    id="translation"
-                    placeholder="Translation"
+                    placeholder='Translation'
                     name="selectedTranslation"
-                    autoFocus
-                    autoComplete='off'
                     disabled={isLoading}
-
+                    chipValues={wordValues.translations}
+                    onDelete={(text) => handleRemove(EArrayNames.translations, text)}
                 />
 
-                <Grid container spacing={1}>
-                    {wordValues.translations.map(text =>
-                        <Grid item key={text}>
-                            <Chip
-                                onDelete={handleRemove(EArrayNames.translations, text)}
-                                label={text}
-                                variant='outlined'
-                                color="primary"
-                                disabled={isLoading}
-                            />
-                        </Grid>
-                    )}
-                </Grid>
-
-                <DialogActions>
+                <DialogActions sx={{
+                    mt: 2,
+                    pl: 0,
+                    pr: 0,
+                    justifyContent: variant === 'create' ? '' : 'space-between'
+                }}>
                     {variant === 'edit' &&
                         <Button
                             variant="contained"
@@ -142,35 +93,36 @@ function WordDialogContent({
                         </Button>
                     }
 
-                    <Button
-                        variant="outlined"
-                        onClick={onClose}
-                        disabled={isLoading}
-                    >
-                        Cancel
-                    </Button>
-
-                    {variant === 'edit' &&
+                    <Box>
                         <Button
-                            variant="contained"
-                            onClick={handleSave}
+                            variant="outlined"
+                            onClick={onClose}
                             disabled={isLoading}
+                            sx={{ mr: 1 }}
                         >
-                            Save
+                            Cancel
                         </Button>
-                    }
 
-                    {variant === 'create' &&
-                        <Button
-                            variant="contained"
-                            onClick={handleCreate}
-                            disabled={isLoading}
-                        >
-                            Create
-                        </Button>
-                    }
+                        {variant === 'edit' &&
+                            <Button
+                                variant="contained"
+                                onClick={handleSave}
+                                disabled={isLoading}
+                            >
+                                Save
+                            </Button>
+                        }
 
-
+                        {variant === 'create' &&
+                            <Button
+                                variant="contained"
+                                onClick={handleCreate}
+                                disabled={isLoading}
+                            >
+                                Create
+                            </Button>
+                        }
+                    </Box>
                 </DialogActions>
 
                 <Backdrop open={isLoading} sx={{ position: 'absolute' }}>

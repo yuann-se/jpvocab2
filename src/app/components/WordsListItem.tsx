@@ -2,6 +2,7 @@ import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import { IWord } from './providers/WordsProvider'
 import '@/styles/main.scss'
+import CircularProgressWithLabel from './CircularProgressWithLabel'
 
 
 interface IProps {
@@ -14,7 +15,7 @@ function WordsListItem({ word }: IProps) {
             <Grid item xs={10}>
                 <Grid container>
                     <Grid item xs={12} sm={4}>
-                        <Typography className='writing'>
+                        <Typography fontWeight={500} className='writing'>
                             {word.writing.join(', ')}
                         </Typography>
                     </Grid>
@@ -30,12 +31,8 @@ function WordsListItem({ word }: IProps) {
                                 item
                                 xs={12}
                                 md={6}
-                                flexDirection={'column'}
-                                mt={'5px'}
                             >
-                                {word.translation.map((item, ind) =>
-                                    <Typography key={ind}>&bull; {item}</Typography>
-                                )}
+                                <Typography>{word.translation.join(', ')}</Typography>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -43,7 +40,7 @@ function WordsListItem({ word }: IProps) {
             </Grid>
 
             <Grid item xs={2}>
-                <Typography>{word.completePercent}%</Typography>
+                <CircularProgressWithLabel value={word.completePercent} />
             </Grid>
         </>
     )

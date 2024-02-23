@@ -74,21 +74,21 @@ const lightTheme = createTheme({
             }
         },
 
-        MuiTextField: {
-            variants: [
-                {
-                    props: { variant: 'filled' },
-                    style: {
-                        backgroundColor: 'white'
-                    }
-                },
-                // {
-                //     props: { variant: 'standard' },
-                //     style: {
-                //     }
-                // }
-            ],
-        },
+        // MuiTextField: {
+        //     variants: [
+        //         {
+        //             props: { variant: 'filled' },
+        //             style: {
+        //                 backgroundColor: 'white'
+        //             }
+        //         },
+        //         // {
+        //         //     props: { variant: 'standard' },
+        //         //     style: {
+        //         //     }
+        //         // }
+        //     ],
+        // },
 
         // MuiFilledInput: {
         //     styleOverrides: {
@@ -117,15 +117,32 @@ const lightTheme = createTheme({
         // },
 
         MuiChip: {
-            styleOverrides: {
-                root: {
-                    color: typographyDark
-                    // backgroundColor: primaryLight
-                },
-                // deleteIconMedium: {
-                //     color: primaryMain
-                // }
-            }
+            variants: [
+                {
+                    props: { variant: 'filled' },
+                    style: {
+                        backgroundColor: primaryLight,
+                        color: typographyDark,
+                        '& .MuiChip-deleteIcon': {
+                            color: primaryMain,
+
+                            '&:hover, &:active': {
+                                color: primaryDark
+                            }
+                        }
+                    },
+
+                }
+            ],
+            // styleOverrides: {
+            //     root: {
+            //         color: typographyDark
+            //         // backgroundColor: primaryLight
+            //     },
+            //     // deleteIconMedium: {
+            //     //     color: primaryMain
+            //     // }
+            // }
         }
 
         // MuiGrid: {
@@ -138,9 +155,9 @@ const lightTheme = createTheme({
 
     },
 
-    // typography: {
-    //     fontFamily: '"NotoSans","NotoSansJP", "Arial", sans-serif',
-    // },
+    typography: {
+        fontFamily: '"Noto Sans Variable", "Noto Sans JP Variable", "Arial", sans-serif',
+    },
 })
 
 export default lightTheme
