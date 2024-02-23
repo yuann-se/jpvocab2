@@ -13,7 +13,7 @@ interface ICommonProps {
 
 type TVariantProps = {
     variant: 'create',
-    word: never
+    word?: never
 } | {
     variant: 'edit',
     word: IWord
@@ -112,6 +112,8 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
     }
 
     const handleSave = async () => {
+        if (!word) return
+
         setisLoading(true)
 
         const writings = [...wordValues.writings]
@@ -150,6 +152,8 @@ function WordDialog({ open, onClose, variant, word }: IProps) {
     }
 
     const handleDelete = async () => {
+        if (!word) return
+
         setisLoading(true)
         setIsDeleteDialogOpen(false)
         try {
