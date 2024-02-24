@@ -1,4 +1,4 @@
-import { Chip, Grid, TextField } from '@mui/material'
+import { Box, Chip, FormControl, Grid, TextField } from '@mui/material'
 import React, { KeyboardEventHandler } from 'react'
 import { EArrayNames } from './WordDialog/WordDialog'
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined'
@@ -26,7 +26,12 @@ function InputWithChips({
     onDelete,
 }: IProps) {
     return (
-        <>
+        <Box
+            component={'form'}
+            noValidate
+            autoComplete='off'
+            onSubmit={(e) => e.preventDefault()}
+        >
             <TextField
                 value={value}
                 onChange={onChange}
@@ -35,9 +40,8 @@ function InputWithChips({
                 fullWidth
                 placeholder={placeholder}
                 name={name}
-                autoFocus
-                autoComplete='off'
                 disabled={disabled}
+            // inputProps={{readonly: true, onfocus: this.removeAttribute('readonly') }}
             />
 
             <Grid container spacing={1}>
@@ -49,11 +53,12 @@ function InputWithChips({
                             // variant='outlined'
                             color="primary"
                             disabled={disabled}
-                            deleteIcon={<HighlightOffOutlinedIcon sx={{ stroke: 'primary.light', strokeWidth: 1 }} />}
+                            deleteIcon={<HighlightOffOutlinedIcon />}
                         />
                     </Grid>
                 )}
-            </Grid></>
+            </Grid>
+        </Box>
     )
 }
 

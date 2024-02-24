@@ -39,8 +39,8 @@ function WordDialogContent({
             fullWidth
         >
             <Box
-                component="form"
-                noValidate
+                // component="form"
+                // noValidate
                 sx={{ mt: 1, minWidth: '100%' }}
             >
                 <InputWithChips

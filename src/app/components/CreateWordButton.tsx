@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useRef, useState } from "react"
 import { IconButton } from "@mui/material"
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import WordDialog from "./WordDialog/WordDialog"
@@ -18,13 +18,21 @@ const CreateWordButton = () => {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-    const initialiseDrag = (event: React.MouseEvent) => {
+    const initialiseDrag = (event: React.MouseEvent | React.TouchEvent) => {
         // debugger
         if (!elemRef?.current) return
         const homePage = document.getElementById('homePage')
         if (!homePage) return
 
-        const { clientX, clientY } = event
+        let clientX, clientY
+        if (event.type === 'mousedown') {
+            clientX = (event as React.MouseEvent).clientX
+            clientY = (event as React.MouseEvent).clientY
+        } else {
+            clientX = (event as React.TouchEvent).touches[0].clientX
+            clientY = (event as React.TouchEvent).touches[0].clientY
+        }
+
         const { offsetTop, offsetLeft } = elemRef.current
         const { left, top } = elemRef.current.getBoundingClientRect()
 
@@ -35,11 +43,16 @@ const CreateWordButton = () => {
             dragStartY: clientY
         }
 
-        homePage.addEventListener('mousemove', startDragging)
-        homePage.addEventListener('mouseup', stopDragging)
+        if (event.type === 'mousedown') {
+            homePage.addEventListener('mousemove', startDragging)
+            homePage.addEventListener('mouseup', stopDragging)
+        } else {
+            homePage.addEventListener('touchmove', startDragging)
+            homePage.addEventListener('touchend', stopDragging)
+        }
     }
 
-    const startDragging = useCallback(({ clientX, clientY }: { clientX: number, clientY: number }) => {
+    const startDragging = useCallback((event: MouseEvent | TouchEvent) => {
         // debugger
         if (!elemRef?.current) return
         if (!dragPosition?.current) return
@@ -48,18 +61,32 @@ const CreateWordButton = () => {
 
         const { dragStartLeft, dragStartX, dragStartTop, dragStartY } = dragPosition.current
 
+        let clientX, clientY
+        if (event.type === 'mousedown') {
+            clientX = (event as MouseEvent).clientX
+            clientY = (event as MouseEvent).clientY
+        } else {
+            clientX = (event as TouchEvent).touches[0].clientX
+            clientY = (event as TouchEvent).touches[0].clientY
+        }
+
         const positionX = dragStartLeft + clientX - dragStartX
         const positionY = dragStartTop + clientY - dragStartY
 
         elemRef.current.style.transform = `translate(${positionX}px, ${positionY}px)`
     }, [])
 
-    const stopDragging = useCallback(() => {
+    const stopDragging = useCallback((event: MouseEvent | TouchEvent) => {
         const homePage = document.getElementById('homePage')
         if (!homePage) return
 
-        homePage.removeEventListener('mousemove', startDragging)
-        homePage.removeEventListener('mouseup', stopDragging)
+        if (event.type === 'mouseup') {
+            homePage.removeEventListener('mousemove', startDragging)
+            homePage.removeEventListener('mouseup', stopDragging)
+        } else {
+            homePage.removeEventListener('touchmove', startDragging)
+            homePage.removeEventListener('touchend', stopDragging)
+        }
 
         setTimeout(() => {
             isDragging.current = false
@@ -76,6 +103,7 @@ const CreateWordButton = () => {
         <>
             <div
                 onMouseDown={initialiseDrag}
+                onTouchStart={initialiseDrag}
                 ref={elemRef}
                 style={{ display: 'inline-block' }}
             >
