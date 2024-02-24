@@ -5,7 +5,6 @@ import { IWord, useWordsContext } from './providers/WordsProvider'
 import '@/styles/main.scss'
 import WordsListItem from './WordsListItem'
 import WordDialog from './WordDialog/WordDialog'
-import Draggable from './Draggable'
 import CreateWordButton from './CreateWordButton'
 
 
@@ -23,8 +22,20 @@ function WordsList() {
     const { words } = useWordsContext()
     const [selectedWord, setSelectedWord] = useState<IWord | null>(null)
 
+    const hadleDrop = (e: React.DragEvent) => {
+        // debugger
+        // e.preventDefault()
+        // const data = e.dataTransfer.getData('text/plain')
+        // const target = e.target as HTMLDivElement
+        // const draggableElement = document.getElementById(data)
+        // if (!draggableElement) return
+        // target.appendChild(draggableElement)
+    }
+
     return (
-        <Box className={'wordsList'}>
+        <Box className={'wordsList'}
+        // onDrop={hadleDrop} onDragOver={e => e.preventDefault()}
+        >
             <WordDialog
                 open={!!selectedWord}
                 onClose={() => setSelectedWord(null)}
@@ -47,6 +58,7 @@ function WordsList() {
                 ))}
 
                 <CreateWordButton />
+
             </Container>
         </Box>
     )
