@@ -1,21 +1,16 @@
-@import './variables';
-
 .homePage {
     height: 100%;
     display: flex;
     flex-direction: column;
 
-    // .header {
-    //     height: 3.5em;
+    .header {
+        height: 4em;
+        background-color: var(--primary);
 
-    //     .signOutButton {
-    //         // color: $textLight;
-    //     }
-
-    //     .createWordButton {
-    //         color: $textLight;
-    //     }
-    // }
+        .logoutButton {
+            color: var(--typography-contrast)
+        }
+    }
 
     .wordsList {
         flex-grow: 1;
@@ -24,9 +19,9 @@
         .wordsListItem {
             padding: 16px 24px;
             border-radius: 5px;
-            background-color: white;
+            background-color: var(--bg-primary);
             cursor: pointer;
-            box-shadow: 1px 1px 5px -1px #664dce1c;
+            box-shadow: 1px 1px 5px -1px var(--shadow);
             // border-bottom: 1px solid lightgray;
 
             &:not(:last-child) {
@@ -42,8 +37,38 @@
                 margin-bottom: 5px;
                 font-size: 1.2em;
             }
+
+            .circularProgressWithLabel {
+                position: relative;
+                display: inline-flex;
+                margin: 0 auto;
+
+                .backgroundCircle {
+                    position: absolute;
+                    color: var(--bg-secondary);
+                }
+
+                .foregroundCircle {
+                    position: absolute;
+                    inset: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+        }
+
+        .createWordButton {
+            color: var(--secondary);
+
+            svg {
+                width: 60px;
+                height: 60px;
+            }
+
+            &:hover {
+                background-color: color-mix(in srgb, var(--secondary), transparent 90%);
+            }
         }
     }
-
-
 }

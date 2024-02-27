@@ -7,11 +7,16 @@ import CircularProgressWithLabel from './CircularProgressWithLabel'
 
 interface IProps {
     word: IWord,
+    onClick: () => void,
 }
 
-function WordsListItem({ word }: IProps) {
+function WordCard({ word, onClick }: IProps) {
     return (
-        <>
+        <Grid
+            container
+            className={'wordsListItem'}
+            onClick={onClick}
+        >
             <Grid item xs={10}>
                 <Grid container>
                     <Grid item xs={12} sm={4}>
@@ -42,8 +47,8 @@ function WordsListItem({ word }: IProps) {
             <Grid item xs={2}>
                 <CircularProgressWithLabel value={word.completePercent} />
             </Grid>
-        </>
+        </Grid>
     )
 }
 
-export default WordsListItem
+export default WordCard

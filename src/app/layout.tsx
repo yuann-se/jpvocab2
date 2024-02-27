@@ -1,9 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "../styles/globals.scss";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { NextAuthProvider } from "./components/NextAuthProvider";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import lightTheme from "../themes/lightTheme";
 import WordsProvider from "./components/providers/WordsProvider";
 import '@fontsource-variable/noto-sans-jp';
 import '@fontsource-variable/noto-sans';
@@ -11,7 +9,15 @@ import '@fontsource-variable/noto-sans';
 
 export const metadata: Metadata = {
     title: "JPVocab | Home",
-};
+    viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+}
+
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false
+}
 
 async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
@@ -19,14 +25,11 @@ async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>)
             <body>
                 <NextAuthProvider>
                     <AppRouterCacheProvider>
-                        <ThemeProvider theme={lightTheme}>
-                            <WordsProvider>
-                                <main>
-                                    <CssBaseline />
-                                    {children}
-                                </main>
-                            </WordsProvider>
-                        </ThemeProvider>
+                        <WordsProvider>
+                            <main>
+                                {children}
+                            </main>
+                        </WordsProvider>
                     </AppRouterCacheProvider>
                 </NextAuthProvider>
             </body>

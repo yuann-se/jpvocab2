@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from "react"
 import { IconButton } from "@mui/material"
-import AddCircleIcon from '@mui/icons-material/AddCircle'
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import WordDialog from "./WordDialog/WordDialog"
 
 
@@ -28,10 +28,14 @@ const CreateWordButton = () => {
         if (event.type === 'mousedown') {
             clientX = (event as React.MouseEvent).clientX
             clientY = (event as React.MouseEvent).clientY
-        } else {
+        }
+
+        if (event.type === 'touchstart') {
             clientX = (event as React.TouchEvent).touches[0].clientX
             clientY = (event as React.TouchEvent).touches[0].clientY
         }
+
+        if (typeof clientX !== 'number' || typeof clientY !== 'number') return
 
         const { offsetTop, offsetLeft } = elemRef.current
         const { left, top } = elemRef.current.getBoundingClientRect()
@@ -62,13 +66,17 @@ const CreateWordButton = () => {
         const { dragStartLeft, dragStartX, dragStartTop, dragStartY } = dragPosition.current
 
         let clientX, clientY
-        if (event.type === 'mousedown') {
+        if (event.type === 'mousemove') {
             clientX = (event as MouseEvent).clientX
             clientY = (event as MouseEvent).clientY
-        } else {
+        }
+
+        if (event.type === 'touchmove') {
             clientX = (event as TouchEvent).touches[0].clientX
             clientY = (event as TouchEvent).touches[0].clientY
         }
+
+        if (typeof clientX !== 'number' || typeof clientY !== 'number') return
 
         const positionX = dragStartLeft + clientX - dragStartX
         const positionY = dragStartTop + clientY - dragStartY
@@ -105,13 +113,13 @@ const CreateWordButton = () => {
                 onMouseDown={initialiseDrag}
                 onTouchStart={initialiseDrag}
                 ref={elemRef}
-                style={{ display: 'inline-block' }}
+                style={{ display: 'inline-block', touchAction: 'none' }}
             >
                 <IconButton
-                    color='secondary'
+                    className="createWordButton"
                     onClick={handleClick}
                 >
-                    <AddCircleIcon sx={{ width: '60px', height: '60px' }} />
+                    <AddCircleRoundedIcon />
                 </IconButton>
             </div>
 

@@ -3,7 +3,7 @@ import { Box, CircularProgress, Container, Grid, Typography } from '@mui/materia
 import React, { useState } from 'react'
 import { IWord, useWordsContext } from './providers/WordsProvider'
 import '@/styles/main.scss'
-import WordsListItem from './WordsListItem'
+import WordCard from './WordCard'
 import WordDialog from './WordDialog/WordDialog'
 import CreateWordButton from './CreateWordButton'
 
@@ -22,20 +22,8 @@ function WordsList() {
     const { words } = useWordsContext()
     const [selectedWord, setSelectedWord] = useState<IWord | null>(null)
 
-    const hadleDrop = (e: React.DragEvent) => {
-        // debugger
-        // e.preventDefault()
-        // const data = e.dataTransfer.getData('text/plain')
-        // const target = e.target as HTMLDivElement
-        // const draggableElement = document.getElementById(data)
-        // if (!draggableElement) return
-        // target.appendChild(draggableElement)
-    }
-
     return (
-        <Box className={'wordsList'}
-        // onDrop={hadleDrop} onDragOver={e => e.preventDefault()}
-        >
+        <Box className={'wordsList'}>
             <WordDialog
                 open={!!selectedWord}
                 onClose={() => setSelectedWord(null)}
@@ -47,19 +35,15 @@ function WordsList() {
                 {!words && <CircularProgress />}
 
                 {words?.map(word => (
-                    <Grid
-                        container
+                    <WordCard
                         key={word.id}
-                        className={'wordsListItem'}
+                        word={word}
                         onClick={() => setSelectedWord(word)}
-                    >
-                        <WordsListItem word={word} />
-                    </Grid>
+                    />
                 ))}
-
-                <CreateWordButton />
-
             </Container>
+
+            <CreateWordButton />
         </Box>
     )
 }
