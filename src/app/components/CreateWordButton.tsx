@@ -12,7 +12,10 @@ interface IDragPosition {
 }
 
 const CreateWordButton = () => {
-    const elemRef = useRef<HTMLDivElement>(null)
+    const draggableRef = useRef<HTMLDivElement>(null)
+    const droppableRef = useRef<HTMLElement | null>(null)
+    const droppableRect = useRef<DOMRect | null>(null)
+
     const dragPosition = useRef<IDragPosition | null>(null)
     const isDragging = useRef(false)
 
@@ -20,9 +23,14 @@ const CreateWordButton = () => {
 
     const initialiseDrag = (event: React.MouseEvent | React.TouchEvent) => {
         // debugger
-        if (!elemRef?.current) return
-        const homePage = document.getElementById('homePage')
-        if (!homePage) return
+        if (!draggableRef?.current) return
+
+        if (!droppableRef.current) {
+            droppableRef.current = document.getElementById('homePage')
+        }
+
+        if (!droppableRef.current) return
+        droppableRect.current = droppableRef.current.getBoundingClientRect()
 
         let clientX, clientY
         if (event.type === 'mousedown') {
@@ -37,8 +45,8 @@ const CreateWordButton = () => {
 
         if (typeof clientX !== 'number' || typeof clientY !== 'number') return
 
-        const { offsetTop, offsetLeft } = elemRef.current
-        const { left, top } = elemRef.current.getBoundingClientRect()
+        const { offsetTop, offsetLeft } = draggableRef.current
+        const { left, top } = draggableRef.current.getBoundingClientRect()
 
         dragPosition.current = {
             dragStartLeft: left - offsetLeft,
@@ -48,18 +56,20 @@ const CreateWordButton = () => {
         }
 
         if (event.type === 'mousedown') {
-            homePage.addEventListener('mousemove', startDragging)
-            homePage.addEventListener('mouseup', stopDragging)
+            droppableRef.current.addEventListener('mousemove', startDragging)
+            droppableRef.current.addEventListener('mouseup', stopDragging)
         } else {
-            homePage.addEventListener('touchmove', startDragging)
-            homePage.addEventListener('touchend', stopDragging)
+            droppableRef.current.addEventListener('touchmove', startDragging)
+            droppableRef.current.addEventListener('touchend', stopDragging)
         }
     }
 
     const startDragging = useCallback((event: MouseEvent | TouchEvent) => {
         // debugger
-        if (!elemRef?.current) return
+        if (!draggableRef?.current) return
+        if (!droppableRef?.current) return
         if (!dragPosition?.current) return
+        if (!droppableRect?.current) return
 
         isDragging.current = true
 
@@ -78,26 +88,54 @@ const CreateWordButton = () => {
 
         if (typeof clientX !== 'number' || typeof clientY !== 'number') return
 
-        const positionX = dragStartLeft + clientX - dragStartX
-        const positionY = dragStartTop + clientY - dragStartY
+        let positionX = dragStartLeft + clientX - dragStartX // if <= 0 make 0 // if > droppableRect.current.width - width make droppableRect.current.width - width 
+        let positionY = dragStartTop + clientY - dragStartY // if - dragStartTop <=0 make 0 // if - dragStartTop >= droppableRect.current.height - height make droppableRect.current.height - height
 
-        elemRef.current.style.transform = `translate(${positionX}px, ${positionY}px)`
+        // const isOnTopBorder = positionY - dragStartTop <= 0
+        // const isOnRightBorder = positionX >= containerWidth - elementWidth
+        const isOnLeftBorder = positionX <= 0
+        // const isOnBottomBorder = positionY - dragStartTop >= containerHeight - elementHeight
+
+        const rect = draggableRef.current.getBoundingClientRect()
+        // const rect
+
+        const { bottom, top, height, left, width, right } = rect
+
+        const isOnTopBorder = bottom <= height
+        const isOnRightBorder = left + width >= droppableRect.current.width // make droppableRect.current.width - width 
+        // const isOnLeftBorder = left <= 0 // make 0
+        const isOnBottomBorder = top + height >= droppableRect.current.height
+
+        if (isOnLeftBorder) {
+            positionX = 0
+        }
+        // if (isOnTopBorder) {
+        //     positionY = dragStartTop
+        // }
+
+        // if (isOnBottomBorder) {
+        //     positionY = 
+        // }
+        console.log(isOnTopBorder, isOnRightBorder, isOnLeftBorder, isOnBottomBorder)
+
+        draggableRef.current.style.transform = `translate(${positionX}px, ${positionY}px)`
     }, [])
 
     const stopDragging = useCallback((event: MouseEvent | TouchEvent) => {
-        const homePage = document.getElementById('homePage')
-        if (!homePage) return
+        if (!droppableRef.current) return
 
         if (event.type === 'mouseup') {
-            homePage.removeEventListener('mousemove', startDragging)
-            homePage.removeEventListener('mouseup', stopDragging)
+            droppableRef.current.removeEventListener('mousemove', startDragging)
+            droppableRef.current.removeEventListener('mouseup', stopDragging)
         } else {
-            homePage.removeEventListener('touchmove', startDragging)
-            homePage.removeEventListener('touchend', stopDragging)
+            droppableRef.current.removeEventListener('touchmove', startDragging)
+            droppableRef.current.removeEventListener('touchend', stopDragging)
         }
 
         setTimeout(() => {
             isDragging.current = false
+            droppableRef.current = null
+            droppableRect.current = null
         }, 0);
     }, [])
 
@@ -112,7 +150,7 @@ const CreateWordButton = () => {
             <div
                 onMouseDown={initialiseDrag}
                 onTouchStart={initialiseDrag}
-                ref={elemRef}
+                ref={draggableRef}
                 style={{ display: 'inline-block', touchAction: 'none' }}
             >
                 <IconButton
