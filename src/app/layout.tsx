@@ -3,13 +3,10 @@ import "../styles/globals.scss";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { NextAuthProvider } from "./components/NextAuthProvider";
 import WordsProvider from "./components/providers/WordsProvider";
-import '@fontsource-variable/noto-sans-jp';
-import '@fontsource-variable/noto-sans';
-
+import { Noto_Sans, Noto_Sans_JP } from 'next/font/google'
 
 export const metadata: Metadata = {
     title: "JPVocab | Home",
-    viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
 }
 
 export const viewport: Viewport = {
@@ -19,9 +16,12 @@ export const viewport: Viewport = {
     userScalable: false
 }
 
+const noto_sans = Noto_Sans({ subsets: ['latin'], variable: '--font-noto-sans' })
+const noto_sans_jp = Noto_Sans_JP({ preload: false, variable: '--font-noto-sans-jp' })
+
 async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang="en">
+        <html lang="en" className={`${noto_sans.variable} ${noto_sans_jp.variable}`}>
             <body>
                 <NextAuthProvider>
                     <AppRouterCacheProvider>
