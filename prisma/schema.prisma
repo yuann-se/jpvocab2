@@ -12,14 +12,16 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-  words    Word[]
+  id          Int         @id @default(autoincrement())
+  email       String      @unique
+  password    String
+  words       Word[]
+  preferences Preference?
 }
 
 model Word {
   id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now())
   writing         String[]
   reading         String[] @default([])
   translation     String[]
@@ -27,4 +29,21 @@ model Word {
   isLearned       Boolean  @default(false)
   userId          Int
   user            User     @relation(fields: [userId], references: [id])
+}
+
+model Preference {
+  id                   Int       @id @default(autoincrement())
+  sortField            String    @default("createdAt")
+  sortDirection        String    @default("asc")
+  mode                 String    @default("light")
+  createButtonPosition Position?
+  userId               Int       @unique
+  user                 User      @relation(fields: [userId], references: [id])
+}
+
+model Position {
+  x            Float
+  y            Float
+  preferenceId Int        @unique
+  preference   Preference @relation(fields: [preferenceId], references: [id])
 }
