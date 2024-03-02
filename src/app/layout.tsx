@@ -4,6 +4,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { NextAuthProvider } from "./components/NextAuthProvider";
 import WordsProvider from "./components/providers/WordsProvider";
 import { Noto_Sans, Noto_Sans_JP } from 'next/font/google'
+import PreferencesProvider from "./components/providers/PreferencesProvider";
 
 export const metadata: Metadata = {
     title: "JPVocab | Home",
@@ -25,11 +26,13 @@ async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>)
             <body>
                 <NextAuthProvider>
                     <AppRouterCacheProvider>
-                        <WordsProvider>
-                            <main>
-                                {children}
-                            </main>
-                        </WordsProvider>
+                        <PreferencesProvider>
+                            <WordsProvider>
+                                <main>
+                                    {children}
+                                </main>
+                            </WordsProvider>
+                        </PreferencesProvider>
                     </AppRouterCacheProvider>
                 </NextAuthProvider>
             </body>

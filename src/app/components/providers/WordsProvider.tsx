@@ -1,4 +1,5 @@
 'use client'
+import { getWords } from '@/app/api/word/handlers'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
 
@@ -26,24 +27,9 @@ function WordsProvider({ children }: Readonly<{ children: React.ReactNode }>) {
     const [words, setWords] = useState<IWord[] | null>(null)
 
     useEffect(() => {
-        const getWords = async () => {
-            try {
-                const response = await fetch('/api/word', {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                })
-
-                const data = await response.json()
-
-                setWords(data.words)
-
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
         getWords()
+            .then(res => setWords(res))
+            .catch(err => console.error(err))
     }, [])
 
     return (

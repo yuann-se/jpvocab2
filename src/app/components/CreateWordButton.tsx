@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { IconButton } from "@mui/material"
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import WordDialog from "./WordDialog/WordDialog"
-import Draggable, { DraggableEvent } from "react-draggable";
+import Draggable from "react-draggable";
 
 
 const CreateWordButton = () => {
@@ -11,6 +11,15 @@ const CreateWordButton = () => {
     // required to remove react-draggable warnings
     const buttonRef = useRef<HTMLButtonElement>(null)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+    // useEffect(() => {
+
+
+    //   return () => {
+    //     second
+    //   }
+    // }, [])
+
 
     const handleClick = () => {
         if (!isDragging.current) {
@@ -30,6 +39,7 @@ const CreateWordButton = () => {
                 }}
                 bounds={'#homePage'}
                 nodeRef={buttonRef}
+            // positionOffset={{ x: '10%', y: '10%' }}
             >
                 <IconButton
                     className="createWordButton"

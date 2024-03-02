@@ -1,5 +1,23 @@
 import { IPostWord, IPutWord } from "./route"
 
+
+export async function getWords() {
+    const response = await fetch('/api/word', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok || data.error) {
+        throw new Error(data.error)
+    }
+
+    return data.words
+}
+
 export async function createWord({ writing, reading, translation }: IPostWord) {
     const response = await fetch('/api/word', {
         method: 'POST',

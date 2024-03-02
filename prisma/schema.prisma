@@ -35,7 +35,6 @@ model Preference {
   id                   Int       @id @default(autoincrement())
   sortField            String    @default("createdAt")
   sortDirection        String    @default("asc")
-  mode                 String    @default("light")
   createButtonPosition Position?
   userId               Int       @unique
   user                 User      @relation(fields: [userId], references: [id])
