@@ -13,6 +13,8 @@ export async function GET() {
             },
         })
 
+        // const buttonPosition = a
+
         return NextResponse.json({
             status: 201,
             preferences
@@ -25,3 +27,42 @@ export async function GET() {
         })
     }
 }
+
+// export async function PUT(req: Request) {
+//     try {
+//         const { id, writing, reading, translation }: IPutWord = await req.json()
+
+//         const word = await db.word.findUnique({
+//             where: {
+//                 id: id
+//             }
+//         })
+
+//         if (!word) {
+//             return NextResponse.json({
+//                 status: 404,
+//                 error: "Word not found"
+//             })
+//         }
+
+//         const updatedWord = await db.word.update({
+//             where: {
+//                 id: id,
+//             },
+//             data: {
+//                 writing, reading, translation
+//             },
+//         })
+
+//         return NextResponse.json({
+//             status: 201,
+//             word: updatedWord
+//         })
+
+//     } catch (error) {
+//         return NextResponse.json({
+//             status: 500,
+//             error: error
+//         })
+//     }
+// }

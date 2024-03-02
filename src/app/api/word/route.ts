@@ -14,6 +14,37 @@ export interface IPutWord extends IPostWord {
     id: IWord['id']
 }
 
+export async function GET() {
+    try {
+        const session = await getServerSession(authOptions)
+
+        const words = await db.word.findMany({
+            where: {
+                userId: Number(session?.user.id)
+            },
+            orderBy: [
+                {
+                    completePercent: 'asc',
+                },
+                {
+                    id: 'asc'
+                }
+            ]
+        })
+
+        return NextResponse.json({
+            status: 201,
+            words
+        })
+
+    } catch (error) {
+        return NextResponse.json({
+            status: 500,
+            error: error
+        })
+    }
+}
+
 export async function POST(req: Request) {
     try {
         const { writing, reading, translation }: IPostWord = await req.json()
@@ -46,37 +77,6 @@ export async function POST(req: Request) {
             { error: error },
             { status: 500 }
         )
-    }
-}
-
-export async function GET() {
-    try {
-        const session = await getServerSession(authOptions)
-
-        const words = await db.word.findMany({
-            where: {
-                userId: Number(session?.user.id)
-            },
-            orderBy: [
-                {
-                    completePercent: 'asc',
-                },
-                {
-                    id: 'asc'
-                }
-            ]
-        })
-
-        return NextResponse.json({
-            status: 201,
-            words
-        })
-
-    } catch (error) {
-        return NextResponse.json({
-            status: 500,
-            error: error
-        })
     }
 }
 

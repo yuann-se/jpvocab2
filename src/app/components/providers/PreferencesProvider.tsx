@@ -39,6 +39,6 @@ function PreferencesProvider({ children }: Readonly<{ children: React.ReactNode 
     )
 }
 
-export const useWordsContext = () => useContext(PreferencesContext)
+export const usePreferencesContext = () => useContext(PreferencesContext)
 
 export default PreferencesProvider

@@ -6,6 +6,7 @@ import '@/styles/main.scss'
 import WordCard from './WordCard'
 import WordDialog from './WordDialog/WordDialog'
 import CreateWordButton from './CreateWordButton'
+import { usePreferencesContext } from './providers/PreferencesProvider'
 
 
 const defaultWord: IWord = {
@@ -20,7 +21,10 @@ const defaultWord: IWord = {
 
 function WordsList() {
     const { words } = useWordsContext()
+    const { preferences } = usePreferencesContext()
     const [selectedWord, setSelectedWord] = useState<IWord | null>(null)
+
+    console.log(preferences)
 
     return (
         <Box className={'wordsList'}>

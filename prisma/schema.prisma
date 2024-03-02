@@ -32,17 +32,10 @@ model Word {
 }
 
 model Preference {
-  id                   Int       @id @default(autoincrement())
-  sortField            String    @default("createdAt")
-  sortDirection        String    @default("asc")
-  createButtonPosition Position?
-  userId               Int       @unique
-  user                 User      @relation(fields: [userId], references: [id])
-}
-
-model Position {
-  x            Float
-  y            Float
-  preferenceId Int        @unique
-  preference   Preference @relation(fields: [preferenceId], references: [id])
+  id                   Int    @id @default(autoincrement())
+  sortField            String @default("createdAt")
+  sortDirection        String @default("asc")
+  createButtonPosition Json?
+  userId               Int    @unique
+  user                 User   @relation(fields: [userId], references: [id])
 }

@@ -27,7 +27,13 @@ export async function POST(req: Request) {
             }
         })
 
-        const { password: newUserPassword, ...rest } = newUser
+        const { password: newUserPassword, id, ...rest } = newUser
+
+        await db.preference.create({
+            data: {
+                userId: id
+            }
+        })
 
         return NextResponse.json({
             status: 201,

@@ -10,29 +10,24 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { Divider } from '@mui/material'
 import { useRouter } from 'next/navigation'
+import { createUser } from '../api/user/handlers'
 
 export default function SignUpForm() {
     const router = useRouter()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
+        event.preventDefault()
+        const data = new FormData(event.currentTarget)
 
-        const response = await fetch('/api/user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        try {
+            await createUser({
                 email: data.get('email'),
-                password: data.get('password'),
+                password: data.get('password')
             })
-        })
 
-        if (response.ok) {
             router.push('/login')
-        } else {
-            console.log(response)
+        } catch (error) {
+            console.log(error)
         }
     }
 
