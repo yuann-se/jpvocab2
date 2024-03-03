@@ -23,6 +23,10 @@
     }
 }
 
+.MuiCircularProgress-colorPrimary {
+    color: var(--primary) !important;
+}
+
 .MuiFormLabel-root {
     &:not(.MuiInputLabel-shrink) {
         font-size: .875rem;
