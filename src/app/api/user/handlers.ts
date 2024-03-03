@@ -13,6 +13,6 @@ export async function createUser({ email, password }: { email: string, password:
     const data = await response.json()
 
     if (!response.ok || data.error) {
-        throw new Error(data.error)
+        throw data.error
     }
 }

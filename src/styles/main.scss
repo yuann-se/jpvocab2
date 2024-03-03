@@ -72,3 +72,30 @@
         }
     }
 }
+
+.authPage {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow-y: auto;
+
+    .MuiAvatar-root {
+        background-color: var(--secondary);
+    }
+
+    .MuiInputBase-input,
+    .MuiButton-fullWidth {
+        box-sizing: border-box;
+        height: 50px;
+    }
+
+    .MuiDivider-wrapper {
+        font-size: .875rem;
+    }
+
+    .googleLogo {
+        margin-right: 5px;
+    }
+}

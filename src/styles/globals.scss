@@ -51,6 +51,8 @@
   --primary-light: #f4edff;
   --primary-dark: #4f41b7;
 
+  --error: #f63d68;
+
   --shadow: #f4edff;
 
   --secondary: #f886ae;
@@ -110,17 +112,17 @@ a {
   color: var(--typography);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --shadow: #00000099;
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --shadow: #00000099;
 
-    // --error: 
-    --bg-primary: #333;
-    --bg-secondary: #00000099;
+//     // --error: 
+//     --bg-primary: #333;
+//     --bg-secondary: #00000099;
 
-    --typography: whitesmoke;
-    --typography-secondary: #fff;
-    --typography-contrast: #00000099;
+//     --typography: whitesmoke;
+//     --typography-secondary: #fff;
+//     --typography-contrast: #00000099;
 
-  }
-}
+//   }
+// }
