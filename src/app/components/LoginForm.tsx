@@ -9,6 +9,7 @@ import { SubmitHandler } from 'react-hook-form'
 import FormConstructor from './FormConstructor/FormConstructor'
 import EmailInput from './FormConstructor/EmailInput'
 import PasswordInput from './FormConstructor/PasswordInput'
+import { useRouter } from 'next/navigation'
 
 
 type Inputs = {
@@ -17,13 +18,22 @@ type Inputs = {
 }
 
 export default function LoginForm() {
+    const router = useRouter()
+
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        await signIn('credentials', {
+        const res = await signIn('credentials', {
             email: data.email,
             password: data.password,
-            callbackUrl: `${window.location.origin}/`,
-            // redirect: false
+            redirect: false
         })
+
+        if (!res) return
+
+        if (res.ok) {
+            router.push("/")
+        } else {
+            throw 'Authorization error'
+        }
     }
 
     return (

@@ -12,7 +12,7 @@ export async function getWords() {
     const data = await response.json()
 
     if (!response.ok || data.error) {
-        throw new Error(data.error)
+        throw data.error
     }
 
     return data.words
@@ -34,7 +34,7 @@ export async function createWord({ writing, reading, translation }: IPostWord) {
     const data = await response.json()
 
     if (!response.ok || data.error) {
-        throw new Error(data.error)
+        throw data.error
     }
 
     return data.word
@@ -52,7 +52,7 @@ export async function deleteWord(id: number) {
     const data = await response.json()
 
     if (!response.ok || data.error) {
-        throw new Error(JSON.stringify(data.error))
+        throw data.error
     }
 
     return data
@@ -75,7 +75,7 @@ export async function updateWord({ id, writing, reading, translation }: IPutWord
     const data = await response.json()
 
     if (!response.ok || data.error) {
-        throw new Error(JSON.stringify(data.error))
+        throw data.error
     }
 
     return data.word

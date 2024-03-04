@@ -1,8 +1,10 @@
+'use client'
 import React, { useEffect, useRef, useState } from "react"
 import { IconButton } from "@mui/material"
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import WordDialog from "./WordDialog/WordDialog"
-import Draggable from "react-draggable";
+import Draggable, { DraggableEventHandler } from "react-draggable";
+import { usePreferencesContext } from "./providers/PreferencesProvider";
 
 
 const CreateWordButton = () => {
@@ -12,14 +14,7 @@ const CreateWordButton = () => {
     const buttonRef = useRef<HTMLButtonElement>(null)
     const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-    // useEffect(() => {
-
-
-    //   return () => {
-    //     second
-    //   }
-    // }, [])
-
+    const { preferences, updatePreferences } = usePreferencesContext()
 
     const handleClick = () => {
         if (!isDragging.current) {
@@ -27,19 +22,34 @@ const CreateWordButton = () => {
         }
     }
 
+    const handleDragStop: DraggableEventHandler = (e, { x, y }) => {
+        setTimeout(() => {
+            isDragging.current = false
+        }, 0)
+
+        const relativeX = x / window.innerWidth
+        const relativeY = y / window.innerHeight
+
+        updatePreferences({ createButtonPosition: { x: relativeX, y: relativeY } })
+    }
+
+    if (!preferences) return null
+
+    console.log(preferences)
+
     return (
         <>
             <Draggable
-                // defaultPosition={{x: 0, y: 0}}
-                onDrag={() => { isDragging.current = true }}
-                onStop={() => {
-                    setTimeout(() => {
-                        isDragging.current = false
-                    }, 0);
+                defaultPosition={{
+                    x: window.innerWidth * preferences.createButtonPosition.x,
+                    y: window.innerHeight * preferences.createButtonPosition.y
                 }}
+                onDrag={() => {
+                    isDragging.current = true
+                }}
+                onStop={handleDragStop}
                 bounds={'#homePage'}
                 nodeRef={buttonRef}
-            // positionOffset={{ x: '10%', y: '10%' }}
             >
                 <IconButton
                     className="createWordButton"

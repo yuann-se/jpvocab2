@@ -51,6 +51,7 @@ function FormConstructor({ children, title, onSubmit, LinkComponent }: IFormCons
         try {
             await onSubmit(data)
         } catch (error) {
+            console.log(error)
             setApiError({ show: true, message: JSON.stringify(error) })
         } finally {
             setIsLoading(false)

@@ -5,6 +5,7 @@ import LogoutButton from "@/app/components/LogoutButton"
 import Head from "next/head"
 import PreferencesProvider from "./components/providers/PreferencesProvider"
 import WordsProvider from "./components/providers/WordsProvider"
+import CreateWordButton from "./components/CreateWordButton"
 
 
 export default function Home() {
@@ -29,6 +30,9 @@ export default function Home() {
                     </Box>
 
                     <WordsList />
+
+                    <CreateWordButton />
+
                 </Box>
             </WordsProvider>
         </PreferencesProvider>

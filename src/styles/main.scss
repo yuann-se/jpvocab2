@@ -57,18 +57,19 @@
                 }
             }
         }
+    }
 
-        .createWordButton {
-            color: var(--secondary);
+    .createWordButton {
+        width: fit-content;
+        color: var(--secondary);
 
-            svg {
-                width: 60px;
-                height: 60px;
-            }
+        svg {
+            width: 60px;
+            height: 60px;
+        }
 
-            &:hover {
-                background-color: color-mix(in srgb, var(--secondary), transparent 90%);
-            }
+        &:hover {
+            background-color: color-mix(in srgb, var(--secondary), transparent 90%);
         }
     }
 }

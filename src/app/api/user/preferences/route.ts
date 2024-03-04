@@ -1,7 +1,9 @@
+import { IPreferences } from "@/app/components/providers/PreferencesProvider"
 import authOptions from "@/app/lib/authOptions"
 import { db } from "@/app/lib/db"
 import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
+
 
 export async function GET() {
     try {
@@ -28,41 +30,30 @@ export async function GET() {
     }
 }
 
-// export async function PUT(req: Request) {
-//     try {
-//         const { id, writing, reading, translation }: IPutWord = await req.json()
+export async function PUT(req: Request) {
+    try {
+        const { id, sortField, sortDirection, createButtonPosition }: IPreferences = await req.json()
 
-//         const word = await db.word.findUnique({
-//             where: {
-//                 id: id
-//             }
-//         })
+        const updated = await db.preference.update({
+            where: {
+                id: id,
+            },
+            data: {
+                sortField,
+                sortDirection,
+                createButtonPosition: JSON.stringify(createButtonPosition)
+            },
+        })
 
-//         if (!word) {
-//             return NextResponse.json({
-//                 status: 404,
-//                 error: "Word not found"
-//             })
-//         }
+        return NextResponse.json({
+            status: 201,
+            preferences: updated
+        })
 
-//         const updatedWord = await db.word.update({
-//             where: {
-//                 id: id,
-//             },
-//             data: {
-//                 writing, reading, translation
-//             },
-//         })
-
-//         return NextResponse.json({
-//             status: 201,
-//             word: updatedWord
-//         })
-
-//     } catch (error) {
-//         return NextResponse.json({
-//             status: 500,
-//             error: error
-//         })
-//     }
-// }
+    } catch (error) {
+        return NextResponse.json({
+            status: 500,
+            error: error
+        })
+    }
+}

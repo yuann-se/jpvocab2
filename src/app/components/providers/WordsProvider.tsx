@@ -5,6 +5,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 
 export interface IWord {
     id: number,
+    createdAt: Date,
     writing: string[],
     reading: string[],
     translation: string[],

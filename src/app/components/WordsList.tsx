@@ -1,5 +1,5 @@
 'use client'
-import { Box, CircularProgress, Container, Grid, Typography } from '@mui/material'
+import { Backdrop, Box, CircularProgress, Container, Grid, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { IWord, useWordsContext } from './providers/WordsProvider'
 import '@/styles/main.scss'
@@ -24,7 +24,7 @@ function WordsList() {
     const { preferences } = usePreferencesContext()
     const [selectedWord, setSelectedWord] = useState<IWord | null>(null)
 
-    console.log(preferences)
+    // console.log(preferences)
 
     return (
         <Box className={'wordsList'}>
@@ -36,7 +36,9 @@ function WordsList() {
             />
 
             <Container>
-                {!words && <CircularProgress />}
+                <Backdrop open={!words} sx={{ backgroundColor: 'transparent' }}>
+                    <CircularProgress />
+                </Backdrop>
 
                 {words?.map(word => (
                     <WordCard
@@ -47,7 +49,6 @@ function WordsList() {
                 ))}
             </Container>
 
-            <CreateWordButton />
         </Box>
     )
 }
