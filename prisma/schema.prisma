@@ -35,7 +35,7 @@ model Preference {
   id                   Int    @id @default(autoincrement())
   sortField            String @default("createdAt")
   sortDirection        String @default("asc")
-  createButtonPosition Json?  @default("{\"x\":90,\"y\":-10}")
+  createButtonPosition Json?  @default("{\"x\":0.85,\"y\":-0.02}")
   userId               Int    @unique
   user                 User   @relation(fields: [userId], references: [id])
 }
