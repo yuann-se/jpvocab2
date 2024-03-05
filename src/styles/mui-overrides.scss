@@ -28,8 +28,38 @@
 }
 
 .MuiFormLabel-root {
+    color: var(--primary-dark-desaturated) !important;
+
     &:not(.MuiInputLabel-shrink) {
         font-size: .875rem;
+    }
+}
+
+.MuiFilledInput-root {
+    background-color: var(--bg-secondary) !important;
+
+    &::before {
+        border-bottom: none !important;
+    }
+
+    &::after {
+        border-bottom-color: var(--primary) !important;
+    }
+}
+
+// .MuiChip-filled {
+//     background-color: var(--primary-light) !important;
+// }
+
+.MuiChip-outlined {
+    border-color: var(--secondary) !important;
+    background-color: var(--secondary-light) !important;
+    color: var(--secondary-dark) !important;
+    font-weight: 500 !important;
+
+    .MuiChip-deleteIcon {
+        font-size: 19px !important;
+        color: var(--secondary) !important;
     }
 }
 

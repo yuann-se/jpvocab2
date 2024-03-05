@@ -61,6 +61,7 @@ function FormConstructor({ children, title, onSubmit, LinkComponent }: IFormCons
     return (
         <Box
             component="form"
+            className='authForm'
             onSubmit={handleSubmit(onSubmitProcessed)}
             sx={{ mt: 1 }}
         >

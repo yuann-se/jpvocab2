@@ -50,6 +50,7 @@
   --primary: #664dce;
   --primary-light: #f4edff;
   --primary-dark: #4f41b7;
+  --primary-dark-desaturated: #565081;
 
   --error: #f63d68;
 
@@ -61,7 +62,7 @@
 
   // --error: 
   --bg-primary: #fff;
-  --bg-secondary: #faf9fc;
+  --bg-secondary: #f6f6fe;
 
   --typography: #333333;
   --typography-secondary: #0009;
@@ -93,11 +94,6 @@ main {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-form {
-  padding: 0 1em;
-  max-width: 400px;
 }
 
 header {

@@ -38,16 +38,12 @@ function WordDialogContent({
             onClose={onClose}
             fullWidth
         >
-            <Box
-                // component="form"
-                // noValidate
-                sx={{ mt: 1, minWidth: '100%' }}
-            >
+            <Box className='wordDialog'>
                 <InputWithChips
                     value={fieldValues.selectedWriting}
                     onChange={handleChange}
                     onKeyDown={handleAdd(EArrayNames.writings)}
-                    placeholder='Writing'
+                    label='Writing'
                     name="selectedWriting"
                     disabled={isLoading}
                     chipValues={wordValues.writings}
@@ -58,7 +54,7 @@ function WordDialogContent({
                     value={fieldValues.selectedReading}
                     onChange={handleChange}
                     onKeyDown={handleAdd(EArrayNames.readings)}
-                    placeholder='Reading'
+                    label='Reading'
                     name="selectedReading"
                     disabled={isLoading}
                     chipValues={wordValues.readings}
@@ -69,7 +65,7 @@ function WordDialogContent({
                     value={fieldValues.selectedTranslation}
                     onChange={handleChange}
                     onKeyDown={handleAdd(EArrayNames.translations)}
-                    placeholder='Translation'
+                    label='Translation'
                     name="selectedTranslation"
                     disabled={isLoading}
                     chipValues={wordValues.translations}

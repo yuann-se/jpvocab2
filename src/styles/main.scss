@@ -82,6 +82,11 @@
     flex-direction: column;
     overflow-y: auto;
 
+    .authForm {
+        padding: 0 1em;
+        max-width: 400px;
+    }
+
     .MuiAvatar-root {
         background-color: var(--secondary);
     }
@@ -98,5 +103,14 @@
 
     .googleLogo {
         margin-right: 5px;
+    }
+}
+
+.wordDialog {
+    padding: 1em;
+
+    .chipsOuterContainer {
+        overflow: hidden;
+        transition: height .3s ease;
     }
 }
