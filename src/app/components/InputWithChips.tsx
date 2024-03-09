@@ -20,14 +20,36 @@ function InputWithChips({ chipValues, onDelete, ...textFieldProps }: IProps) {
 
     useEffect(() => {
         if (!chipsInnerContainer?.current) return
-        setChipsContainerHeight(chipsInnerContainer.current.clientHeight)
+        setTimeout(() => {
+            setChipsContainerHeight(chipsInnerContainer?.current?.clientHeight || 0)
+        }, CHIP_EXPAND_DURATION);
+
+    }, [chipValues, chipValuesAnimated])
+
+    useEffect(() => {
+        // debugger
+        if (chipValuesAnimated.length === chipValues.length) return
 
         setTimeout(() => {
             setChipValuesAnimated(chipValues)
-        }, chipValues.length >= chipValuesAnimated.length
-            ? 0
-            : CHIP_EXPAND_DURATION)
-    }, [chipValues, chipValuesAnimated.length])
+        }, CHIP_EXPAND_DURATION)
+
+    }, [chipValues])
+
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key !== 'Enter') return
+        const target = e.target as HTMLInputElement
+        const newValue = target.value.trim()
+        if (!newValue) return
+        if (chipValuesAnimated.includes(target.value)) return
+
+        setChipValuesAnimated(prev => ([...prev, newValue]))
+
+        setTimeout(() => {
+            textFieldProps.onKeyDown?.(e)
+        }, 0);
+    }
 
     return (
         <Box
@@ -39,7 +61,7 @@ function InputWithChips({ chipValues, onDelete, ...textFieldProps }: IProps) {
             <TextField
                 value={textFieldProps.value}
                 onChange={textFieldProps.onChange}
-                onKeyDown={textFieldProps.onKeyDown}
+                onKeyDown={handleKeyDown}
                 margin="normal"
                 variant='filled'
                 fullWidth
@@ -52,33 +74,31 @@ function InputWithChips({ chipValues, onDelete, ...textFieldProps }: IProps) {
                 className='chipsOuterContainer'
                 sx={{ height: chipsContainerHeight }}
             >
-                <Grid
-                    container
-                    spacing={1}
+                <Box
+                    className='chipsInnerContainer'
                     ref={chipsInnerContainer}
-                    sx={{ mt: 0 }}
                 >
                     {chipValuesAnimated.map((text, ind) =>
-                        <Grid key={ind} item>
-                            <Collapse
-                                orientation='horizontal'
-                                in={chipValues.includes(text)}
-                            >
-                                {/* <Grow in={chipValues.includes(text)}> */}
-                                <Chip
-                                    onDelete={() => onDelete(text)}
-                                    label={text}
-                                    variant='outlined'
-                                    color="primary"
-                                    disabled={textFieldProps.disabled}
-                                    deleteIcon={<HighlightOffOutlinedIcon />}
-                                // deleteIcon={<CloseRoundedIcon />}
-                                />
-                                {/* </Grow> */}
-                            </Collapse>
-                        </Grid>
+                        <Collapse
+                            key={text}
+                            orientation='horizontal'
+                            in={chipValues.includes(text)}
+                            timeout={CHIP_EXPAND_DURATION}
+                        >
+                            {/* <Grow in={chipValues.includes(text)}> */}
+                            <Chip
+                                onDelete={() => onDelete(text)}
+                                label={text}
+                                variant='outlined'
+                                color="primary"
+                                disabled={textFieldProps.disabled}
+                                deleteIcon={<HighlightOffOutlinedIcon />}
+                            // deleteIcon={<CloseRoundedIcon />}
+                            />
+                            {/* </Grow> */}
+                        </Collapse>
                     )}
-                </Grid>
+                </Box>
             </Box>
         </Box>
     )

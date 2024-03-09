@@ -112,5 +112,15 @@
     .chipsOuterContainer {
         overflow: hidden;
         transition: height .3s ease;
+
+        .chipsInnerContainer {
+            display: flex;
+            flex-wrap: wrap;
+
+            .MuiCollapse-wrapperInner {
+                padding-right: .5em;
+                padding-bottom: .5em;
+            }
+        }
     }
 }
