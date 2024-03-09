@@ -28,6 +28,9 @@ const CreateWordButton = () => {
         }
     }, [])
 
+    const handleDrag = () => {
+        isDragging.current = true
+    }
 
     const handleClick = () => {
         if (!isDragging.current) {
@@ -56,9 +59,7 @@ const CreateWordButton = () => {
                     x: window.innerWidth * preferences.createButtonPosition.x,
                     y: window.innerHeight * preferences.createButtonPosition.y
                 }}
-                onDrag={() => {
-                    isDragging.current = true
-                }}
+                onDrag={handleDrag}
                 onStop={handleDragStop}
                 bounds={'#homePage'}
                 nodeRef={buttonRef}
