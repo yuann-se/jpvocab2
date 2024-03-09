@@ -14,12 +14,6 @@ export default function Home() {
         <PreferencesProvider>
             <WordsProvider>
                 <Box className={'homePage'} id='homePage'>
-                    <Head>
-                        <meta
-                            name="viewport"
-                            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-                        />
-                    </Head>
                     <Box
                         component={'header'}
                         className={'header'}
